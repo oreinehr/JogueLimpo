@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<style data-src="colors_and_type.css">
+/* =====================================================================
+   JOGUE LIMPO COM CAPÃO — Design Tokens
+   Colors + Type foundation. Import this file anywhere in the system.
+   Fonts: Plus Jakarta Sans (headings) + Mulish (body) via Google Fonts.
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Mulish:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+:root {
+  /* ---- Font families ---- */
+  --font-heading: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Mulish', system-ui, -apple-system, sans-serif;
+
+  /* =================================================================
+     PRIMARY — Teal/Blue  (água limpa, confiança, inovação)
+     Anchored on logo teal #0A7E9B
+     ================================================================= */
+  --primary-50:  #edf7fa;
+  --primary-100: #d2ebf2;
+  --primary-200: #a7d8e5;
+  --primary-300: #71bdd2;
+  --primary-400: #3a9cb8;
+  --primary-500: #0a7e9b;
+  --primary-600: #086981;
+  --primary-700: #0a5468;
+  --primary-800: #0d4354;
+  --primary-900: #103847;
+  --primary-950: #07222c;
+
+  /* Brand deep navy (água limpa profunda) — used as ink/accent */
+  --navy: #093660;
+  --navy-700: #0c4576;
+  --navy-300: #6f93b4;
+
+  /* =================================================================
+     SECONDARY — Green/Forest  (natureza, reciclagem)
+     Anchored on logo forest green #064C34
+     ================================================================= */
+  --secondary-50:  #ecf7f1;
+  --secondary-100: #cfecdd;
+  --secondary-200: #a1d8bf;
+  --secondary-300: #67bd98;
+  --secondary-400: #2f9d71;
+  --secondary-500: #138a5d;
+  --secondary-600: #0c7049;
+  --secondary-700: #07583a;
+  --secondary-800: #064c34;
+  --secondary-900: #0a3d2c;
+  --secondary-950: #04241a;
+
+  /* =================================================================
+     TERTIARY — Olive  (terra, responsabilidade ambiental)
+     Anchored on logo olive #717441
+     ================================================================= */
+  --olive-50:  #f7f7ed;
+  --olive-100: #ecedcf;
+  --olive-200: #dadda1;
+  --olive-300: #c2c66f;
+  --olive-400: #9b9e52;
+  --olive-500: #717441;
+  --olive-600: #5f6237;
+  --olive-700: #4b4d2d;
+  --olive-800: #3c3e26;
+  --olive-900: #2f3120;
+
+  /* =================================================================
+     SEMANTIC
+     ================================================================= */
+  --success: #15924f;   --success-bg: #e6f5ec;   --success-fg: #0a5a30;
+  --warning: #d98a04;   --warning-bg: #fcf2dd;   --warning-fg: #7a4d02;
+  --error:   #d63a3a;   --error-bg:   #fbe9e9;   --error-fg:   #8a2020;
+  --info:    #2480c4;   --info-bg:    #e6f1fa;   --info-fg:    #144f7d;
+
+  /* =================================================================
+     NEUTRAL — cool gray with faint blue-green undertone
+     ================================================================= */
+  --gray-50:  #f7f9f9;
+  --gray-100: #eef2f2;
+  --gray-200: #dde4e5;
+  --gray-300: #c3cdce;
+  --gray-400: #97a4a6;
+  --gray-500: #6b787a;
+  --gray-600: #515d5f;
+  --gray-700: #3e484a;
+  --gray-800: #2a3133;
+  --gray-900: #1a1f20;
+  --gray-950: #0e1213;
+  --white: #ffffff;
+
+  /* ---- Semantic surface / text aliases ---- */
+  --bg:         var(--white);
+  --bg-subtle:  var(--gray-50);
+  --bg-muted:   var(--gray-100);
+  --surface:    var(--white);
+  --border:     var(--gray-200);
+  --border-strong: var(--gray-300);
+  --ink:        var(--navy);          /* primary text */
+  --ink-2:      var(--gray-700);      /* secondary text */
+  --ink-3:      var(--gray-500);      /* muted text */
+  --ink-invert: var(--white);
+  --link:       var(--primary-600);
+
+  /* =================================================================
+     SPACING — 8px base scale
+     ================================================================= */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* =================================================================
+     RADIUS — friendly, organic
+     ================================================================= */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+  /* =================================================================
+     ELEVATION — soft, navy-tinted shadows
+     ================================================================= */
+  --shadow-sm: 0 1px 2px rgba(9,54,96,.06), 0 1px 3px rgba(9,54,96,.05);
+  --shadow-md: 0 4px 12px rgba(9,54,96,.08), 0 2px 4px rgba(9,54,96,.05);
+  --shadow-lg: 0 12px 28px rgba(9,54,96,.10), 0 4px 8px rgba(9,54,96,.06);
+  --shadow-xl: 0 24px 48px rgba(9,54,96,.12), 0 8px 16px rgba(9,54,96,.07);
+
+  /* ---- Motion ---- */
+  --ease-out: cubic-bezier(.22,.61,.36,1);
+  --ease-in-out: cubic-bezier(.65,.05,.36,1);
+  --dur-fast: 120ms;
+  --dur: 200ms;
+  --dur-slow: 320ms;
+}
+
+/* =====================================================================
+   TYPOGRAPHY — semantic element styles
+   1rem = 16px. Scale defined in px for clarity.
+   ===================================================================== */
+.h1, h1.ds { font-family: var(--font-heading); font-weight: 800; font-size: 56px; line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); }
+.h2, h2.ds { font-family: var(--font-heading); font-weight: 700; font-size: 44px; line-height: 1.1;  letter-spacing: -0.015em; color: var(--ink); }
+.h3, h3.ds { font-family: var(--font-heading); font-weight: 700; font-size: 34px; line-height: 1.15; letter-spacing: -0.01em; color: var(--ink); }
+.h4, h4.ds { font-family: var(--font-heading); font-weight: 600; font-size: 26px; line-height: 1.25; color: var(--ink); }
+.h5, h5.ds { font-family: var(--font-heading); font-weight: 600; font-size: 20px; line-height: 1.3;  color: var(--ink); }
+.h6, h6.ds { font-family: var(--font-heading); font-weight: 600; font-size: 17px; line-height: 1.4;  color: var(--ink); }
+
+.body-lg { font-family: var(--font-body); font-weight: 400; font-size: 18px; line-height: 1.6; color: var(--ink-2); }
+.body-md { font-family: var(--font-body); font-weight: 400; font-size: 16px; line-height: 1.6; color: var(--ink-2); }
+.body-sm { font-family: var(--font-body); font-weight: 400; font-size: 14px; line-height: 1.55; color: var(--ink-2); }
+.caption { font-family: var(--font-body); font-weight: 500; font-size: 12px; line-height: 1.4; color: var(--ink-3); letter-spacing: 0.01em; }
+.overline { font-family: var(--font-heading); font-weight: 700; font-size: 12px; line-height: 1.3; letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary-600); }
+
+</style>
+<style data-src="components.css">
+/* =====================================================================
+   JOGUE LIMPO — Component styles. Requires colors_and_type.css.
+   ===================================================================== */
+
+/* ---------------- BUTTONS ---------------- */
+.btn{
+  font-family:var(--font-heading);font-weight:600;font-size:15px;line-height:1;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 20px;border-radius:var(--radius-pill);border:1.5px solid transparent;
+  cursor:pointer;transition:background var(--dur) var(--ease-out),color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),transform var(--dur-fast) var(--ease-out),box-shadow var(--dur) var(--ease-out);
+  text-decoration:none;white-space:nowrap;
+}
+.btn:active{transform:scale(.97);}
+.btn .lucide{width:18px;height:18px;}
+.btn-sm{padding:8px 14px;font-size:13px;}
+.btn-lg{padding:15px 26px;font-size:17px;}
+
+.btn-primary{background:var(--primary-500);color:#fff;}
+.btn-primary:hover{background:var(--primary-600);box-shadow:var(--shadow-md);}
+.btn-primary:active{background:var(--primary-700);}
+.btn-primary:disabled{background:var(--gray-200);color:var(--gray-400);cursor:not-allowed;transform:none;box-shadow:none;}
+
+.btn-secondary{background:var(--secondary-600);color:#fff;}
+.btn-secondary:hover{background:var(--secondary-700);box-shadow:var(--shadow-md);}
+.btn-secondary:active{background:var(--secondary-800);}
+.btn-secondary:disabled{background:var(--gray-200);color:var(--gray-400);cursor:not-allowed;}
+
+.btn-outline{background:transparent;color:var(--primary-600);border-color:var(--primary-300);}
+.btn-outline:hover{background:var(--primary-50);border-color:var(--primary-500);}
+.btn-outline:active{background:var(--primary-100);}
+.btn-outline:disabled{color:var(--gray-400);border-color:var(--gray-200);cursor:not-allowed;}
+
+.btn-ghost{background:transparent;color:var(--primary-600);}
+.btn-ghost:hover{background:var(--primary-50);}
+.btn-ghost:active{background:var(--primary-100);}
+.btn-ghost:disabled{color:var(--gray-400);cursor:not-allowed;}
+
+/* ---------------- INPUTS ---------------- */
+.field{display:flex;flex-direction:column;gap:6px;}
+.field-label{font-family:var(--font-heading);font-size:13px;font-weight:600;color:var(--ink-2);}
+.input{
+  font-family:var(--font-body);font-size:15px;color:var(--ink);
+  padding:11px 14px;border-radius:var(--radius-md);border:1.5px solid var(--border-strong);
+  background:#fff;transition:border-color var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out);
+  width:100%;box-sizing:border-box;
+}
+.input::placeholder{color:var(--ink-3);}
+.input:hover{border-color:var(--gray-400);}
+.input:focus{outline:none;border-color:var(--primary-500);box-shadow:0 0 0 3px var(--primary-100);}
+.input:disabled{background:var(--gray-100);color:var(--gray-400);cursor:not-allowed;}
+.input.is-error{border-color:var(--error);}
+.input.is-error:focus{box-shadow:0 0 0 3px var(--error-bg);}
+.input.is-success{border-color:var(--success);}
+.input.is-success:focus{box-shadow:0 0 0 3px var(--success-bg);}
+.field-hint{font-size:12px;color:var(--ink-3);}
+.field-hint.is-error{color:var(--error-fg);}
+.field-hint.is-success{color:var(--success-fg);}
+textarea.input{resize:vertical;min-height:84px;line-height:1.5;}
+
+.input-icon{position:relative;display:flex;align-items:center;}
+.input-icon .lucide{position:absolute;left:13px;width:18px;height:18px;color:var(--ink-3);pointer-events:none;}
+.input-icon .input{padding-left:40px;}
+
+/* ---------------- BADGES ---------------- */
+.badge{
+  font-family:var(--font-heading);font-weight:600;font-size:12.5px;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:var(--radius-pill);border:1px solid transparent;
+}
+.badge .lucide{width:14px;height:14px;}
+.badge-reciclavel{background:var(--primary-50);color:var(--primary-700);border-color:var(--primary-200);}
+.badge-organico{background:var(--secondary-50);color:var(--secondary-800);border-color:var(--secondary-200);}
+.badge-coleta{background:var(--olive-50);color:var(--olive-700);border-color:var(--olive-200);}
+.badge-educacao{background:var(--info-bg);color:var(--info-fg);border-color:#bcdcf2;}
+
+/* ---------------- ALERTS ---------------- */
+.alert{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:14px 16px;border-radius:var(--radius-md);border:1px solid transparent;
+  font-family:var(--font-body);font-size:14px;line-height:1.45;
+}
+.alert .lucide{width:20px;height:20px;flex:0 0 20px;margin-top:1px;}
+.alert strong{font-family:var(--font-heading);font-weight:700;display:block;margin-bottom:2px;}
+.alert-success{background:var(--success-bg);color:var(--success-fg);border-color:#bfe3cd;}
+.alert-warning{background:var(--warning-bg);color:var(--warning-fg);border-color:#f0dcae;}
+.alert-error{background:var(--error-bg);color:var(--error-fg);border-color:#f1c4c4;}
+.alert-info{background:var(--info-bg);color:var(--info-fg);border-color:#bcdcf2;}
+
+/* ---------------- CARDS ---------------- */
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-sm);transition:box-shadow var(--dur) var(--ease-out),transform var(--dur) var(--ease-out);
+}
+.card.is-hoverable:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);}
+
+</style>
+<style>
+  body{margin:0;font-family:var(--font-body);background:var(--gray-50);padding:24px;}
+  .stack{display:flex;flex-direction:column;gap:12px;}
+</style></head>
+<body>
+<div class="stack">
+  <div class="alert alert-success"><i data-lucide="check-circle-2"></i><div><strong>Coleta confirmada</strong>Sua solicitação foi agendada para quinta-feira, 4 de junho.</div></div>
+  <div class="alert alert-warning"><i data-lucide="alert-triangle"></i><div><strong>Coleta remarcada</strong>Devido à chuva, a coleta do seu bairro mudou para sexta-feira.</div></div>
+  <div class="alert alert-error"><i data-lucide="x-circle"></i><div><strong>Não foi possível agendar</strong>Verifique o endereço informado e tente novamente.</div></div>
+  <div class="alert alert-info"><i data-lucide="info"></i><div><strong>Você sabia?</strong>Pilhas e baterias precisam de pontos de coleta específicos.</div></div>
+</div>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script>lucide.createIcons();</script>
+</body></html>

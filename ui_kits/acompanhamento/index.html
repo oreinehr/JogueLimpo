@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acompanhamento da Coleta — Jogue Limpo com Capão</title>
+<style data-src="colors_and_type.css">
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Mulish:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+:root {
+  --font-heading: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Mulish', system-ui, -apple-system, sans-serif;
+  --primary-50:#edf7fa;--primary-100:#d2ebf2;--primary-200:#a7d8e5;--primary-300:#71bdd2;
+  --primary-400:#3a9cb8;--primary-500:#0a7e9b;--primary-600:#086981;--primary-700:#0a5468;
+  --primary-800:#0d4354;--primary-900:#103847;--primary-950:#07222c;
+  --navy:#093660;--navy-700:#0c4576;--navy-300:#6f93b4;
+  --secondary-50:#ecf7f1;--secondary-100:#cfecdd;--secondary-200:#a1d8bf;--secondary-300:#67bd98;
+  --secondary-400:#2f9d71;--secondary-500:#138a5d;--secondary-600:#0c7049;--secondary-700:#07583a;
+  --secondary-800:#064c34;--secondary-900:#0a3d2c;--secondary-950:#04241a;
+  --olive-50:#f7f7ed;--olive-100:#ecedcf;--olive-200:#dadda1;--olive-300:#c2c66f;
+  --olive-400:#9b9e52;--olive-500:#717441;--olive-600:#5f6237;--olive-700:#4b4d2d;
+  --success:#15924f;--success-bg:#e6f5ec;--success-fg:#0a5a30;
+  --warning:#d98a04;--warning-bg:#fcf2dd;--warning-fg:#7a4d02;
+  --error:#d63a3a;--error-bg:#fbe9e9;--error-fg:#8a2020;
+  --info:#2480c4;--info-bg:#e6f1fa;--info-fg:#144f7d;
+  --gray-50:#f7f9f9;--gray-100:#eef2f2;--gray-200:#dde4e5;--gray-300:#c3cdce;
+  --gray-400:#97a4a6;--gray-500:#6b787a;--gray-600:#515d5f;--gray-700:#3e484a;
+  --gray-800:#2a3133;--gray-900:#1a1f20;--gray-950:#0e1213;--white:#ffffff;
+  --bg:var(--white);--bg-subtle:var(--gray-50);--bg-muted:var(--gray-100);
+  --surface:var(--white);--border:var(--gray-200);--border-strong:var(--gray-300);
+  --ink:var(--navy);--ink-2:var(--gray-700);--ink-3:var(--gray-500);--ink-invert:var(--white);
+  --link:var(--primary-600);
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-6:24px;
+  --space-8:32px;--space-10:40px;--space-12:48px;
+  --radius-sm:6px;--radius-md:10px;--radius-lg:16px;--radius-xl:24px;--radius-pill:999px;
+  --shadow-sm:0 1px 2px rgba(9,54,96,.06),0 1px 3px rgba(9,54,96,.05);
+  --shadow-md:0 4px 12px rgba(9,54,96,.08),0 2px 4px rgba(9,54,96,.05);
+  --shadow-lg:0 12px 28px rgba(9,54,96,.10),0 4px 8px rgba(9,54,96,.06);
+  --shadow-xl:0 24px 48px rgba(9,54,96,.12),0 8px 16px rgba(9,54,96,.07);
+  --ease-out:cubic-bezier(.22,.61,.36,1);--ease-in-out:cubic-bezier(.65,.05,.36,1);
+  --dur-fast:120ms;--dur:200ms;--dur-slow:320ms;
+}
+.h5{font-family:var(--font-heading);font-weight:600;font-size:20px;line-height:1.3;color:var(--ink);}
+.body-sm{font-family:var(--font-body);font-weight:400;font-size:14px;line-height:1.55;color:var(--ink-2);}
+.overline{font-family:var(--font-heading);font-weight:700;font-size:12px;line-height:1.3;letter-spacing:.12em;text-transform:uppercase;color:var(--primary-600);}
+</style>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;font-family:var(--font-body);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;}
+
+/* Layout shell */
+.app{display:flex;flex-direction:column;height:100vh;}
+
+/* Header */
+.header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;height:60px;flex-shrink:0;
+  background:#fff;border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow-sm);z-index:40;position:relative;
+}
+.header-left{display:flex;align-items:center;gap:10px;}
+.back-btn{
+  width:36px;height:36px;border-radius:var(--radius-md);border:1.5px solid var(--border-strong);
+  background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--ink-2);transition:all var(--dur) var(--ease-out);
+}
+.back-btn:hover{background:var(--primary-50);border-color:var(--primary-300);color:var(--primary-600);}
+
+/* Status bar */
+.status-bar{
+  display:flex;align-items:center;gap:16px;padding:10px 20px;flex-shrink:0;
+  background:#fff;border-bottom:1px solid var(--border);flex-wrap:wrap;
+}
+
+/* Map area */
+.map-area{flex:1;position:relative;overflow:hidden;min-height:200px;}
+
+/* Bottom panel */
+.bottom-panel{
+  height:36vh;min-height:240px;max-height:420px;
+  overflow-y:auto;flex-shrink:0;
+  background:#fff;border-top:3px solid var(--border);
+}
+.bottom-panel::-webkit-scrollbar{width:4px;}
+.bottom-panel::-webkit-scrollbar-thumb{background:var(--gray-300);border-radius:4px;}
+
+/* Panel sections */
+.panel-section{padding:16px 20px;border-bottom:1px solid var(--border);}
+.panel-section:last-child{border-bottom:none;}
+
+/* Status chips */
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 12px;border-radius:var(--radius-pill);
+  font-family:var(--font-heading);font-weight:700;font-size:12.5px;
+}
+.chip-active{background:var(--success-bg);color:var(--success-fg);}
+.chip-warning{background:var(--warning-bg);color:var(--warning-fg);}
+.chip-error{background:var(--error-bg);color:var(--error-fg);}
+
+/* Dot pulse animation */
+.dot-pulse{
+  width:8px;height:8px;border-radius:50%;background:var(--success);flex-shrink:0;
+  animation:pulse 1.8s ease-in-out infinite;
+}
+.dot-warning{background:var(--warning);}
+.dot-error{background:var(--error);}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(21,146,79,.4);}50%{box-shadow:0 0 0 5px rgba(21,146,79,0);}}
+@keyframes pulseW{0%,100%{box-shadow:0 0 0 0 rgba(217,138,4,.4);}50%{box-shadow:0 0 0 5px rgba(217,138,4,0);}}
+
+/* Truck animation on map */
+@keyframes truckMove{
+  0%{transform:translate(0,0);}
+  25%{transform:translate(4px,-3px);}
+  50%{transform:translate(8px,-1px);}
+  75%{transform:translate(4px,2px);}
+  100%{transform:translate(0,0);}
+}
+.truck-pin{animation:truckMove 4s ease-in-out infinite;}
+
+/* Buttons */
+.btn{
+  font-family:var(--font-heading);font-weight:600;font-size:14px;line-height:1;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:11px 18px;border-radius:var(--radius-pill);border:1.5px solid transparent;
+  cursor:pointer;transition:all var(--dur) var(--ease-out);text-decoration:none;white-space:nowrap;
+}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--primary-500);color:#fff;}
+.btn-primary:hover{background:var(--primary-600);box-shadow:var(--shadow-md);}
+.btn-outline{background:transparent;color:var(--primary-600);border-color:var(--primary-300);}
+.btn-outline:hover{background:var(--primary-50);border-color:var(--primary-500);}
+.btn-ghost{background:transparent;color:var(--ink-2);border-color:var(--border-strong);}
+.btn-ghost:hover{background:var(--gray-50);border-color:var(--gray-400);}
+.btn-whatsapp{background:#25D366;color:#fff;border-color:#25D366;}
+.btn-whatsapp:hover{background:#1da853;}
+.btn-sm{padding:8px 14px;font-size:13px;}
+
+/* Route list */
+.route-item{
+  display:flex;align-items:center;gap:12px;padding:10px 0;
+  border-bottom:1px solid var(--border);
+}
+.route-item:last-child{border-bottom:none;}
+.route-dot{
+  width:10px;height:10px;border-radius:50%;background:var(--gray-300);flex-shrink:0;
+}
+.route-dot.active{background:var(--primary-500);}
+.route-dot.done{background:var(--success);}
+.route-dot.next{background:var(--warning);}
+.route-dot.current{background:var(--error);box-shadow:0 0 0 4px rgba(214,58,58,.2);animation:pulseW 1.8s ease-in-out infinite;}
+.route-line-wrap{display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0;}
+.route-vline{width:2px;height:14px;background:var(--gray-200);}
+
+/* ETA display */
+.eta-big{font-family:var(--font-heading);font-weight:800;font-size:44px;line-height:1;color:var(--primary-600);}
+.eta-unit{font-family:var(--font-heading);font-weight:700;font-size:18px;color:var(--ink-3);}
+
+/* Map controls */
+.map-control-btn{
+  width:36px;height:36px;border-radius:var(--radius-md);background:#fff;
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:var(--shadow-sm);color:var(--ink-2);
+  transition:all var(--dur) var(--ease-out);
+}
+.map-control-btn:hover{background:var(--primary-50);color:var(--primary-600);}
+
+/* Tabs */
+.tab-bar{display:flex;gap:4px;padding:12px 20px 0;border-bottom:1px solid var(--border);}
+.tab-btn{
+  font-family:var(--font-heading);font-weight:600;font-size:13.5px;padding:8px 14px;
+  border-radius:var(--radius-md) var(--radius-md) 0 0;border:none;cursor:pointer;
+  background:transparent;color:var(--ink-3);transition:all var(--dur) var(--ease-out);
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+}
+.tab-btn.active{color:var(--primary-600);border-bottom-color:var(--primary-500);background:var(--primary-50);}
+
+/* Aviso cards */
+.aviso-card{
+  display:flex;gap:12px;align-items:flex-start;padding:13px 16px;
+  border-radius:var(--radius-md);border:1px solid transparent;font-family:var(--font-body);font-size:14px;line-height:1.45;
+}
+.aviso-ok{background:var(--success-bg);color:var(--success-fg);border-color:#bfe3cd;}
+.aviso-warn{background:var(--warning-bg);color:var(--warning-fg);border-color:#f0dcae;}
+.aviso-err{background:var(--error-bg);color:var(--error-fg);border-color:#f1c4c4;}
+
+/* ---- Responsive ---- */
+@media (max-width: 767px) {
+  .header { padding: 0 12px; }
+  .status-bar { flex-direction: column; align-items: flex-start; gap: 7px; padding: 9px 12px; }
+  .bottom-panel { height: 44vh; max-height: none; }
+  .panel-section { padding: 14px 12px; }
+  .eta-big { font-size: 36px; }
+  .btn-sm { padding: 10px 12px; font-size: 12.5px; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .bottom-panel { height: 38vh; }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+function useBreakpoint() {
+  const get = () => window.innerWidth < 768 ? 'mobile' : window.innerWidth < 1024 ? 'tablet' : 'desktop';
+  const [bp, setBp] = useState(get);
+  useEffect(() => {
+    const fn = () => setBp(get());
+    window.addEventListener('resize', fn);
+    return () => window.removeEventListener('resize', fn);
+  }, []);
+  return { bp, isMobile: bp === 'mobile', isTablet: bp === 'tablet' };
+}
+
+function Icon({ name, size = 18, color, style = {} }) {
+  return <i data-lucide={name} style={{ width: size, height: size, color, display: 'inline-flex', flexShrink: 0, ...style }} />;
+}
+
+function useLucide() {
+  useEffect(() => { if (window.lucide) window.lucide.createIcons(); });
+}
+
+/* ---- Mapa de Capão da Canoa (SVG mockup) ---- */
+function MapCapao({ status }) {
+  const mapRef = useRef(null);
+  const [mapSize, setMapSize] = useState({ w: 800, h: 400 });
+
+  useEffect(() => {
+    const obs = new ResizeObserver(entries => {
+      const { width, height } = entries[0].contentRect;
+      setMapSize({ w: width, h: height });
+    });
+    if (mapRef.current) obs.observe(mapRef.current);
+    return () => obs.disconnect();
+  }, []);
+
+  const W = mapSize.w, H = mapSize.h;
+
+  /* normalizar coords para o SVG */
+  const sx = x => (x / 100) * W;
+  const sy = y => (y / 100) * H;
+
+  /* Capão da Canoa: cidade em grade orientada NE-SW, com a praia ao leste.
+     Representação estilizada, não GPS real. */
+  const streets = {
+    horizontal: [
+      { y: 15, name: 'Av. Beira-Mar', major: true },
+      { y: 24, name: 'Av. Flores da Cunha', major: true },
+      { y: 33, name: 'Av. Paraguassu', major: true },
+      { y: 42, name: 'Rua Ceci', major: false },
+      { y: 50, name: 'Rua Peri', major: false },
+      { y: 58, name: 'Rua Moema', major: false },
+      { y: 66, name: 'Rua Ubirajara', major: false },
+      { y: 74, name: 'Av. Dom Pedro II', major: true },
+      { y: 83, name: 'Av. Assis Brasil', major: true },
+    ],
+    vertical: [
+      { x: 10, name: 'R. Osório', major: false },
+      { x: 18, name: 'Av. Santos Dumont', major: true },
+      { x: 27, name: 'Av. Getúlio V.', major: true },
+      { x: 36, name: 'R. XV de Nov.', major: false },
+      { x: 45, name: 'Av. Central', major: true },
+      { x: 54, name: 'R. Farroupilha', major: false },
+      { x: 63, name: 'Av. das Flores', major: true },
+      { x: 72, name: 'R. Guarany', major: false },
+      { x: 81, name: 'R. Tupi', major: false },
+      { x: 90, name: 'Av. Atlântica', major: true },
+    ],
+  };
+
+  /* Rota de coleta seletiva - setor norte */
+  const routePoints = [
+    [18, 83], [18, 24], [27, 24], [27, 42], [36, 42],
+    [36, 33], [45, 33], [45, 50], [54, 50], [54, 33],
+  ].map(([x, y]) => `${sx(x)},${sy(y)}`).join(' ');
+
+  /* Percurso já feito */
+  const donePoints = [
+    [18, 83], [18, 24], [27, 24], [27, 42], [36, 42], [36, 33],
+  ].map(([x, y]) => `${sx(x)},${sy(y)}`).join(' ');
+
+  /* Posição atual do caminhão */
+  const truckX = sx(36), truckY = sy(33);
+
+  /* Próximas ruas (fragmento da rota ainda não percorrido) */
+  const upcomingPoints = [
+    [36, 33], [45, 33], [45, 50], [54, 50], [54, 33],
+  ].map(([x, y]) => `${sx(x)},${sy(y)}`).join(' ');
+
+  return (
+    <div ref={mapRef} style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
+      <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
+        {/* Background */}
+        <rect width="100%" height="100%" fill="#f0ece3" />
+
+        {/* Praia - faixa azul à direita */}
+        <rect x={sx(93)} y="0" width={sx(7)} height="100%" fill="#cce8f4" opacity=".8" />
+        <rect x={sx(91.5)} y="0" width={sx(2)} height="100%" fill="#d4e8c2" opacity=".5" />
+
+        {/* Lagoa ao fundo (esquerda) */}
+        <ellipse cx={sx(4)} cy={sy(60)} rx={sx(6)} ry={sy(25)} fill="#cce8f4" opacity=".6" />
+
+        {/* Blocos de quadra (quarteirões) */}
+        {streets.horizontal.slice(0,-1).map((sh, hi) =>
+          streets.vertical.slice(0,-1).map((sv, vi) => {
+            const nextH = streets.horizontal[hi + 1];
+            const nextV = streets.vertical[vi + 1];
+            const x1 = sx(sv.x) + (sv.major ? 3 : 2);
+            const y1 = sy(sh.y) + (sh.major ? 3 : 2);
+            const x2 = sx(nextV.x) - (nextV.major ? 3 : 2);
+            const y2 = sy(nextH.y) - (nextH.major ? 3 : 2);
+            if (x2 <= x1 || y2 <= y1) return null;
+            return <rect key={`${hi}-${vi}`} x={x1} y={y1} width={x2 - x1} height={y2 - y1} fill="#fff" rx="2" opacity=".8" />;
+          })
+        )}
+
+        {/* Ruas horizontais */}
+        {streets.horizontal.map(({ y, name, major }) => (
+          <g key={name}>
+            <line x1="0" y1={sy(y)} x2="100%" y2={sy(y)}
+              stroke={major ? '#c8c0a8' : '#ddd8ca'}
+              strokeWidth={major ? 3.5 : 2} />
+            <text x={sx(2)} y={sy(y) - 3} fontSize={major ? 9 : 7.5} fill="#a09880" fontFamily="var(--font-body)" fontWeight={major ? 600 : 400}>{name}</text>
+          </g>
+        ))}
+
+        {/* Ruas verticais */}
+        {streets.vertical.map(({ x, name, major }) => (
+          <g key={name}>
+            <line x1={sx(x)} y1="0" x2={sx(x)} y2="100%"
+              stroke={major ? '#c8c0a8' : '#ddd8ca'}
+              strokeWidth={major ? 3.5 : 2} />
+            <text x={sx(x) + 3} y={sy(8)} fontSize={major ? 9 : 7.5} fill="#a09880" fontFamily="var(--font-body)" fontWeight={major ? 600 : 400} transform={`rotate(-90, ${sx(x) + 3}, ${sy(8)})`}>{name}</text>
+          </g>
+        ))}
+
+        {/* Rota completa (pontilhado claro) */}
+        <polyline points={routePoints} fill="none"
+          stroke="#a7d8e5" strokeWidth="5" strokeDasharray="10 6"
+          strokeLinecap="round" strokeLinejoin="round" />
+
+        {/* Trecho já percorrido */}
+        <polyline points={donePoints} fill="none"
+          stroke="#15924f" strokeWidth="5"
+          strokeLinecap="round" strokeLinejoin="round" opacity=".55" />
+
+        {/* Próximas ruas (cor primária) */}
+        <polyline points={upcomingPoints} fill="none"
+          stroke="#0a7e9b" strokeWidth="5"
+          strokeLinecap="round" strokeLinejoin="round" />
+
+        {/* Seta indicando direção */}
+        <polygon
+          points={`${sx(42)},${sy(33)} ${sx(43.5)},${sy(31.5)} ${sx(43.5)},${sy(34.5)}`}
+          fill="#0a7e9b" />
+
+        {/* Pin de destino final */}
+        <circle cx={sx(54)} cy={sy(33)} r="7" fill="#0a7e9b" opacity=".25" />
+        <circle cx={sx(54)} cy={sy(33)} r="4" fill="#0a7e9b" />
+
+        {/* Pin da localização do usuário */}
+        <circle cx={sx(45)} cy={sy(50)} r="9" fill="#e6f1fa" stroke="#2480c4" strokeWidth="2" />
+        <circle cx={sx(45)} cy={sy(50)} r="4" fill="#2480c4" />
+        <circle cx={sx(45)} cy={sy(50)} r="16" fill="none" stroke="#2480c4" strokeWidth="1.5" strokeDasharray="3 3" opacity=".5" />
+
+        {/* Label Praia */}
+        <text x={sx(94)} y={sy(30)} fontSize="8" fill="#4a90b8" fontFamily="var(--font-body)" fontWeight="600" textAnchor="middle" transform={`rotate(-90, ${sx(94)}, ${sy(30)})`}>PRAIA</text>
+
+        {/* Label Lagoa */}
+        <text x={sx(4)} y={sy(58)} fontSize="7.5" fill="#4a90b8" fontFamily="var(--font-body)" fontWeight="600" textAnchor="middle">LAGOA</text>
+
+        {/* Caminhão animado */}
+        <g className="truck-pin">
+          {/* Sombra */}
+          <ellipse cx={truckX} cy={truckY + 22} rx="14" ry="4" fill="rgba(0,0,0,.15)" />
+          {/* Balão */}
+          <circle cx={truckX} cy={truckY - 14} r="19"
+            fill={status === 'active' ? '#0a7e9b' : status === 'delayed' ? '#d98a04' : '#d63a3a'}
+            filter="url(#shadow)" />
+          <polygon points={`${truckX-6},${truckY+4} ${truckX+6},${truckY+4} ${truckX},${truckY+14}`}
+            fill={status === 'active' ? '#0a7e9b' : status === 'delayed' ? '#d98a04' : '#d63a3a'} />
+          {/* Ícone de caminhão (simplificado) */}
+          <rect x={truckX - 10} y={truckY - 24} width="20" height="12" rx="2" fill="white" opacity=".92" />
+          <rect x={truckX - 10} y={truckY - 20} width="8" height="8" rx="1" fill="rgba(10,126,155,.4)" />
+          <circle cx={truckX - 5} cy={truckY - 12} r="2.5" fill="white" opacity=".92" />
+          <circle cx={truckX + 5} cy={truckY - 12} r="2.5" fill="white" opacity=".92" />
+        </g>
+
+        {/* Filtro sombra */}
+        <defs>
+          <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="3" stdDeviation="4" floodOpacity=".25" />
+          </filter>
+        </defs>
+      </svg>
+
+      {/* Controles flutuantes */}
+      <div style={{ position: 'absolute', top: 12, right: 12, display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <button className="map-control-btn"><Icon name="plus" size={16} /></button>
+        <button className="map-control-btn"><Icon name="minus" size={16} /></button>
+        <div style={{ height: 1, background: 'var(--border)', margin: '2px 0' }} />
+        <button className="map-control-btn"><Icon name="locate" size={16} color="var(--primary-600)" /></button>
+      </div>
+
+      {/* Legenda do mapa */}
+      <div style={{
+        position: 'absolute', top: 12, left: 12,
+        background: 'rgba(255,255,255,.92)', backdropFilter: 'blur(8px)',
+        borderRadius: 'var(--radius-lg)', padding: '10px 14px',
+        boxShadow: 'var(--shadow-md)', display: 'flex', flexDirection: 'column', gap: 7
+      }}>
+        {[['#15924f', 'Percurso concluído'], ['#0a7e9b', 'Próximas ruas'], ['#a7d8e5', 'Rota completa']].map(([c, l]) => (
+          <div key={l} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ width: 20, height: 3, borderRadius: 2, background: c }} />
+            <span style={{ fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--ink-3)', fontWeight: 500 }}>{l}</span>
+          </div>
+        ))}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#2480c4' }} />
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: 11, color: 'var(--ink-3)', fontWeight: 500 }}>Você</span>
+        </div>
+      </div>
+
+      {/* Badge de atualização */}
+      <div style={{
+        position: 'absolute', bottom: 14, left: '50%', transform: 'translateX(-50%)',
+        background: 'rgba(9,54,96,.75)', backdropFilter: 'blur(6px)',
+        borderRadius: 'var(--radius-pill)', padding: '6px 14px',
+        display: 'flex', alignItems: 'center', gap: 7
+      }}>
+        <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#5de8a0', flexShrink: 0, animation: 'pulse 1.8s ease-in-out infinite' }} />
+        <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: 12, color: '#fff' }}>Atualização automática · Mapa Capão da Canoa</span>
+      </div>
+    </div>
+  );
+}
+
+/* ---- Seção ETA ---- */
+function ETASection({ status }) {
+  const { isMobile } = useBreakpoint();
+  const eta = status === 'active' ? 18 : status === 'delayed' ? 48 : 0;
+  const dist = '1,8 km';
+  const speed = status === 'maintenance' ? '0 km/h' : '24 km/h';
+  return (
+    <div className="panel-section">
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 14 : 20, alignItems: 'center' }}>
+        {/* ETA */}
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 6 }}>
+            <Icon name="truck" size={15} color="var(--ink-3)" />
+            <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: 12, color: 'var(--ink-3)', textTransform: 'uppercase', letterSpacing: '.06em' }}>
+              {status === 'maintenance' ? 'Em manutenção' : 'Chegada estimada'}
+            </span>
+          </div>
+          {status === 'maintenance' ? (
+            <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 22, color: 'var(--error)' }}>Indisponível</div>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+              <span className="eta-big">{eta}</span>
+              <span className="eta-unit">min</span>
+            </div>
+          )}
+        </div>
+        {/* Info grid */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {[
+            ['map-pin', 'Rua Paraguassu, 1234', 'Sua localização'],
+            ['navigation', dist, 'Distância até você'],
+            ['clock', '13:42', 'Última atualização'],
+            ['gauge', speed, 'Velocidade atual'],
+          ].map(([ic, val, label]) => (
+            <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <Icon name={ic} size={13} color="var(--ink-3)" />
+              <div>
+                <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 13, color: 'var(--ink)' }}>{val}</span>
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: 11.5, color: 'var(--ink-3)', marginLeft: 5 }}>{label}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---- Próximas Ruas ---- */
+function RouteSection() {
+  const ruas = [
+    { name: 'Av. Santos Dumont', status: 'done', time: '13:28' },
+    { name: 'Av. Flores da Cunha', status: 'done', time: '13:35' },
+    { name: 'Rua XV de Novembro', status: 'current', time: 'Agora' },
+    { name: 'Av. Paraguassu', status: 'next', time: '~13:52' },
+    { name: 'Rua Ceci', status: 'upcoming', time: '~14:00' },
+    { name: 'Rua Peri', status: 'upcoming', time: '~14:08' },
+    { name: 'Rua Moema', status: 'upcoming', time: '~14:16' },
+    { name: 'Sua localização', status: 'user', time: '~14:20' },
+  ];
+  const dotClass = { done: 'route-dot done', current: 'route-dot current', next: 'route-dot next', upcoming: 'route-dot', user: 'route-dot active' };
+  return (
+    <div className="panel-section">
+      <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 14, color: 'var(--ink)', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <Icon name="route" size={15} color="var(--primary-600)" />
+        Próximas ruas da rota
+      </div>
+      <div>
+        {ruas.map((r, i) => (
+          <div key={r.name} className="route-item">
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0, gap: 0, width: 16 }}>
+              <div className={dotClass[r.status] || 'route-dot'} />
+              {i < ruas.length - 1 && <div style={{ width: 2, height: 14, background: 'var(--gray-200)', marginTop: 2 }} />}
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{
+                fontFamily: 'var(--font-heading)', fontWeight: r.status === 'current' ? 700 : 600,
+                fontSize: 14, color: r.status === 'done' ? 'var(--ink-3)' : r.status === 'current' ? 'var(--ink)' : r.status === 'user' ? 'var(--primary-600)' : 'var(--ink-2)',
+                display: 'flex', alignItems: 'center', gap: 6
+              }}>
+                {r.status === 'user' && <Icon name="map-pin" size={13} color="var(--primary-600)" />}
+                {r.status === 'current' && <Icon name="truck" size={13} color="var(--error)" />}
+                {r.name}
+                {r.status === 'current' && <span style={{ fontSize: 11, background: 'var(--error-bg)', color: 'var(--error-fg)', padding: '2px 7px', borderRadius: 'var(--radius-pill)', fontWeight: 700 }}>Caminhão aqui</span>}
+              </div>
+            </div>
+            <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: r.status === 'done' ? 'var(--success-fg)' : 'var(--ink-3)', flexShrink: 0, marginLeft: 8 }}>{r.time}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---- Próxima Coleta ---- */
+function NextCollection() {
+  return (
+    <div className="panel-section">
+      <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 14, color: 'var(--ink)', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <Icon name="calendar" size={15} color="var(--primary-600)" />
+        Próximas coletas
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+        {[
+          ['trash-2', 'Coleta Convencional', 'Terça-feira', 'var(--olive-600)', 'var(--olive-50)', 'var(--olive-700)'],
+          ['recycle', 'Coleta Seletiva', 'Quinta-feira', 'var(--primary-600)', 'var(--primary-50)', 'var(--primary-700)'],
+        ].map(([ic, name, day, c, bg, tc]) => (
+          <div key={name} style={{ background: bg, border: '1px solid', borderColor: bg === 'var(--olive-50)' ? 'var(--olive-200)' : 'var(--primary-200)', borderRadius: 'var(--radius-md)', padding: '12px 14px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 6 }}>
+              <Icon name={ic} size={15} color={c} />
+              <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 12.5, color: tc }}>{name}</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+              <Icon name="calendar-days" size={13} color={c} />
+              <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: 13, color: tc }}>{day}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---- Avisos ---- */
+function AvisosSection({ status }) {
+  const avisos = {
+    active: [{ cls: 'aviso-card aviso-ok', icon: 'check-circle-2', text: 'Nenhuma ocorrência registrada. Coleta em andamento normalmente.' }],
+    delayed: [
+      { cls: 'aviso-card aviso-warn', icon: 'clock', text: 'Coleta atrasada em aproximadamente 30 minutos devido ao alto volume de resíduos na Av. Santos Dumont.' },
+      { cls: 'aviso-card aviso-warn', icon: 'alert-triangle', text: 'Previsão de chegada recalculada para as 14:48.' },
+    ],
+    maintenance: [
+      { cls: 'aviso-card aviso-err', icon: 'wrench', text: 'Caminhão em manutenção preventiva desde as 13:20.' },
+      { cls: 'aviso-card aviso-err', icon: 'phone', text: 'A coleta do setor norte foi reagendada para amanhã às 08:00. Aguarde confirmação.' },
+    ],
+  };
+  const items = avisos[status] || avisos.active;
+  return (
+    <div className="panel-section">
+      <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 14, color: 'var(--ink)', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <Icon name="bell" size={15} color="var(--primary-600)" />
+        Avisos
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {items.map((av, i) => (
+          <div key={i} className={av.cls}>
+            <Icon name={av.icon} size={17} style={{ flexShrink: 0, marginTop: 1 }} />
+            <span>{av.text}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---- Comunicar Problema ---- */
+function ComunicarSection({ onWhatsapp }) {
+  const acoes = [
+    ['flag', 'Reportar coleta não realizada', 'btn btn-ghost', null],
+    ['package', 'Solicitar coleta de grande volume', 'btn btn-ghost', null],
+    ['message-circle', 'Falar no WhatsApp', 'btn btn-whatsapp', onWhatsapp],
+    ['lightbulb', 'Enviar sugestão', 'btn btn-ghost', null],
+  ];
+  return (
+    <div className="panel-section">
+      <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 14, color: 'var(--ink)', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <Icon name="message-square" size={15} color="var(--primary-600)" />
+        Comunicar problema
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+        {acoes.map(([ic, label, cls, handler]) => (
+          <button key={label} className={cls + ' btn-sm'} onClick={handler} style={{ justifyContent: 'flex-start', textAlign: 'left', gap: 8 }}>
+            <Icon name={ic} size={15} />
+            <span style={{ fontSize: 13, lineHeight: 1.3 }}>{label}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---- App ---- */
+function App() {
+  const [status, setStatus] = useState('active');
+  const { isMobile } = useBreakpoint();
+  useLucide();
+
+  const statusConfig = {
+    active:      { label: 'Em andamento',    chipCls: 'chip chip-active',  dot: 'dot-pulse',  icon: 'truck' },
+    delayed:     { label: 'Atrasado',         chipCls: 'chip chip-warning', dot: 'dot-pulse dot-warning', icon: 'clock' },
+    maintenance: { label: 'Em manutenção',    chipCls: 'chip chip-error',   dot: 'dot-pulse dot-error',   icon: 'wrench' },
+  };
+  const cfg = statusConfig[status];
+
+  return (
+    <div className="app">
+      {/* Header */}
+      <header className="header">
+        <div className="header-left">
+          <a href="../landing-page/index.html">
+            <button className="back-btn"><Icon name="arrow-left" size={17} /></button>
+          </a>
+          <div>
+            <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 15, color: 'var(--ink)', lineHeight: 1.2 }}>Acompanhamento da Coleta</div>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--ink-3)' }}>Coleta Seletiva · Setor Norte</div>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          {/* Demo: toggle de status — oculto em mobile para não poluir */}
+          {!isMobile && (
+            <div style={{ display: 'flex', gap: 4, background: 'var(--gray-100)', borderRadius: 'var(--radius-md)', padding: 3 }}>
+              {['active', 'delayed', 'maintenance'].map(s => (
+                <button key={s} onClick={() => setStatus(s)} style={{
+                  padding: '5px 10px', borderRadius: 7, border: 'none', cursor: 'pointer',
+                  fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 11,
+                  background: status === s ? '#fff' : 'transparent',
+                  color: status === s ? 'var(--ink)' : 'var(--ink-3)',
+                  boxShadow: status === s ? 'var(--shadow-sm)' : 'none',
+                  transition: 'all var(--dur) var(--ease-out)'
+                }}>
+                  {s === 'active' ? 'Ativo' : s === 'delayed' ? 'Atrasado' : 'Manutenção'}
+                </button>
+              ))}
+            </div>
+          )}
+          <button className="back-btn" style={{ border: 'none', background: 'var(--primary-50)', color: 'var(--primary-600)' }}>
+            <Icon name="bell" size={17} color="var(--primary-600)" />
+          </button>
+        </div>
+      </header>
+
+      {/* Status bar */}
+      <div className="status-bar">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <Icon name="map-pin" size={14} color="var(--ink-3)" />
+          <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 13, color: 'var(--ink)' }}>Centro</span>
+          <span style={{ color: 'var(--border-strong)', fontSize: 12 }}>·</span>
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--ink-3)' }}>Rota Coleta Seletiva – Setor Norte</span>
+        </div>
+        <span className={cfg.chipCls}>
+          <div className={cfg.dot} />
+          <Icon name={cfg.icon} size={13} />
+          {cfg.label}
+        </span>
+      </div>
+
+      {/* Map */}
+      <div className="map-area">
+        <MapCapao status={status} />
+      </div>
+
+      {/* Bottom panel */}
+      <div className="bottom-panel">
+        <ETASection status={status} />
+        <RouteSection />
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 0 }}>
+          <NextCollection />
+          <AvisosSection status={status} />
+        </div>
+        <ComunicarSection onWhatsapp={() => window.open('https://wa.me/5551999999999', '_blank')} />
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

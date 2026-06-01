@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jogue Limpo com Capão — Portal do Morador</title>
+<style data-src="colors_and_type.css">
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Mulish:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+:root {
+  --font-heading: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Mulish', system-ui, -apple-system, sans-serif;
+  --primary-50:#edf7fa;--primary-100:#d2ebf2;--primary-200:#a7d8e5;--primary-300:#71bdd2;
+  --primary-400:#3a9cb8;--primary-500:#0a7e9b;--primary-600:#086981;--primary-700:#0a5468;
+  --primary-800:#0d4354;--primary-900:#103847;--primary-950:#07222c;
+  --navy:#093660;--navy-700:#0c4576;--navy-300:#6f93b4;
+  --secondary-50:#ecf7f1;--secondary-100:#cfecdd;--secondary-200:#a1d8bf;--secondary-300:#67bd98;
+  --secondary-400:#2f9d71;--secondary-500:#138a5d;--secondary-600:#0c7049;--secondary-700:#07583a;
+  --secondary-800:#064c34;--secondary-900:#0a3d2c;--secondary-950:#04241a;
+  --olive-50:#f7f7ed;--olive-100:#ecedcf;--olive-200:#dadda1;--olive-300:#c2c66f;
+  --olive-400:#9b9e52;--olive-500:#717441;--olive-600:#5f6237;--olive-700:#4b4d2d;
+  --success:#15924f;--success-bg:#e6f5ec;--success-fg:#0a5a30;
+  --warning:#d98a04;--warning-bg:#fcf2dd;--warning-fg:#7a4d02;
+  --error:#d63a3a;--error-bg:#fbe9e9;--error-fg:#8a2020;
+  --info:#2480c4;--info-bg:#e6f1fa;--info-fg:#144f7d;
+  --gray-50:#f7f9f9;--gray-100:#eef2f2;--gray-200:#dde4e5;--gray-300:#c3cdce;
+  --gray-400:#97a4a6;--gray-500:#6b787a;--gray-600:#515d5f;--gray-700:#3e484a;
+  --gray-800:#2a3133;--gray-900:#1a1f20;--gray-950:#0e1213;--white:#ffffff;
+  --bg:var(--white);--bg-subtle:var(--gray-50);--bg-muted:var(--gray-100);
+  --surface:var(--white);--border:var(--gray-200);--border-strong:var(--gray-300);
+  --ink:var(--navy);--ink-2:var(--gray-700);--ink-3:var(--gray-500);--ink-invert:var(--white);
+  --link:var(--primary-600);
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-6:24px;
+  --space-8:32px;--space-10:40px;--space-12:48px;
+  --radius-sm:6px;--radius-md:10px;--radius-lg:16px;--radius-xl:24px;--radius-pill:999px;
+  --shadow-sm:0 1px 2px rgba(9,54,96,.06),0 1px 3px rgba(9,54,96,.05);
+  --shadow-md:0 4px 12px rgba(9,54,96,.08),0 2px 4px rgba(9,54,96,.05);
+  --shadow-lg:0 12px 28px rgba(9,54,96,.10),0 4px 8px rgba(9,54,96,.06);
+  --shadow-xl:0 24px 48px rgba(9,54,96,.12),0 8px 16px rgba(9,54,96,.07);
+  --ease-out:cubic-bezier(.22,.61,.36,1);--ease-in-out:cubic-bezier(.65,.05,.36,1);
+  --dur-fast:120ms;--dur:200ms;--dur-slow:320ms;
+}
+.h1{font-family:var(--font-heading);font-weight:800;font-size:56px;line-height:1.05;letter-spacing:-0.02em;color:var(--ink);}
+.h2{font-family:var(--font-heading);font-weight:700;font-size:44px;line-height:1.1;letter-spacing:-0.015em;color:var(--ink);}
+.h5{font-family:var(--font-heading);font-weight:600;font-size:20px;line-height:1.3;color:var(--ink);}
+.body-lg{font-family:var(--font-body);font-weight:400;font-size:18px;line-height:1.6;color:var(--ink-2);}
+.body-md{font-family:var(--font-body);font-weight:400;font-size:16px;line-height:1.6;color:var(--ink-2);}
+.body-sm{font-family:var(--font-body);font-weight:400;font-size:14px;line-height:1.55;color:var(--ink-2);}
+.overline{font-family:var(--font-heading);font-weight:700;font-size:12px;line-height:1.3;letter-spacing:.12em;text-transform:uppercase;color:var(--primary-600);}
+</style>
+<style data-src="components.css">
+.btn{font-family:var(--font-heading);font-weight:600;font-size:15px;line-height:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:var(--radius-pill);border:1.5px solid transparent;cursor:pointer;transition:background var(--dur) var(--ease-out),color var(--dur) var(--ease-out),border-color var(--dur) var(--ease-out),transform var(--dur-fast) var(--ease-out),box-shadow var(--dur) var(--ease-out);text-decoration:none;white-space:nowrap;}
+.btn:active{transform:scale(.97);}
+.btn-sm{padding:8px 14px;font-size:13px;}
+.btn-lg{padding:15px 26px;font-size:17px;}
+.btn-primary{background:var(--primary-500);color:#fff;}
+.btn-primary:hover{background:var(--primary-600);box-shadow:var(--shadow-md);}
+.btn-primary:active{background:var(--primary-700);}
+.btn-secondary{background:var(--secondary-600);color:#fff;}
+.btn-secondary:hover{background:var(--secondary-700);box-shadow:var(--shadow-md);}
+.btn-outline{background:transparent;color:var(--primary-600);border-color:var(--primary-300);}
+.btn-outline:hover{background:var(--primary-50);border-color:var(--primary-500);}
+.btn-ghost{background:transparent;color:var(--primary-600);}
+.btn-ghost:hover{background:var(--primary-50);}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field-label{font-family:var(--font-heading);font-size:13px;font-weight:600;color:var(--ink-2);}
+.input{font-family:var(--font-body);font-size:15px;color:var(--ink);padding:11px 14px;border-radius:var(--radius-md);border:1.5px solid var(--border-strong);background:#fff;transition:border-color var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out);width:100%;box-sizing:border-box;}
+.input::placeholder{color:var(--ink-3);}
+.input:focus{outline:none;border-color:var(--primary-500);box-shadow:0 0 0 3px var(--primary-100);}
+textarea.input{resize:vertical;min-height:84px;line-height:1.5;}
+.input-icon{position:relative;display:flex;align-items:center;}
+.input-icon .lucide{position:absolute;left:13px;width:18px;height:18px;color:var(--ink-3);pointer-events:none;}
+.input-icon .input{padding-left:40px;}
+.badge{font-family:var(--font-heading);font-weight:600;font-size:12.5px;line-height:1;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--radius-pill);border:1px solid transparent;}
+.badge-reciclavel{background:var(--primary-50);color:var(--primary-700);border-color:var(--primary-200);}
+.badge-organico{background:var(--secondary-50);color:var(--secondary-800);border-color:var(--secondary-200);}
+.badge-coleta{background:var(--olive-50);color:var(--olive-700);border-color:var(--olive-200);}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);transition:box-shadow var(--dur) var(--ease-out),transform var(--dur) var(--ease-out);}
+.card.is-hoverable:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);}
+</style>
+<style>
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:var(--font-body);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;}
+a{color:inherit;}
+::selection{background:var(--primary-100);}
+/* Mobile menu overlay */
+.mobile-menu{
+  padding:12px 16px 20px;
+  border-top:1px solid var(--border);
+  background:rgba(255,255,255,.98);
+  display:flex;flex-direction:column;gap:4px;
+}
+.mobile-menu-link{
+  font-family:var(--font-heading);font-weight:600;font-size:15px;color:var(--ink);
+  padding:13px 14px;border-radius:var(--radius-md);text-decoration:none;display:block;
+  transition:background var(--dur) var(--ease-out);
+}
+.mobile-menu-link:hover{background:var(--gray-50);}
+.hamburger-btn{
+  width:40px;height:40px;border-radius:var(--radius-md);border:1.5px solid var(--border-strong);
+  background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--ink);transition:all var(--dur) var(--ease-out);
+}
+.hamburger-btn:hover{background:var(--primary-50);border-color:var(--primary-300);}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+/* ---- Breakpoint hook ---- */
+function useBreakpoint() {
+  const get = () => {
+    const w = window.innerWidth;
+    if (w < 768) return 'mobile';
+    if (w < 1024) return 'tablet';
+    return 'desktop';
+  };
+  const [bp, setBp] = useState(get);
+  useEffect(() => {
+    const fn = () => setBp(get());
+    window.addEventListener('resize', fn);
+    return () => window.removeEventListener('resize', fn);
+  }, []);
+  return { bp, isMobile: bp === 'mobile', isTablet: bp === 'tablet', isDesktop: bp === 'desktop' };
+}
+
+/* ---- Primitives ---- */
+function Icon({ name, size = 18, color, style = {} }) {
+  return <i data-lucide={name} style={{ width: size, height: size, color, display: 'inline-flex', flexShrink: 0, ...style }} />;
+}
+function useLucide() {
+  useEffect(() => { if (window.lucide) window.lucide.createIcons(); });
+}
+function Button({ variant = 'primary', size, icon, iconRight, children, onClick, style }) {
+  const cls = ['btn', 'btn-' + variant, size ? 'btn-' + size : ''].join(' ');
+  return (
+    <button className={cls} onClick={onClick} style={style}>
+      {icon && <Icon name={icon} size={size === 'lg' ? 20 : 18} />}
+      {children}
+      {iconRight && <Icon name={iconRight} size={18} />}
+    </button>
+  );
+}
+function Overline({ children, style }) {
+  return <div className="overline" style={style}>{children}</div>;
+}
+function SectionHead({ eyebrow, title, sub, align = 'left', light, isMobile }) {
+  return (
+    <div style={{ maxWidth: 620, margin: align === 'center' ? '0 auto' : 0, textAlign: align }}>
+      {eyebrow && <Overline style={{ color: light ? 'var(--primary-200)' : 'var(--primary-600)', marginBottom: 10 }}>{eyebrow}</Overline>}
+      <h2 className="h2" style={{ margin: 0, fontSize: isMobile ? 28 : 36, color: light ? '#fff' : 'var(--ink)' }}>{title}</h2>
+      {sub && <p className="body-lg" style={{ marginTop: 12, fontSize: isMobile ? 15 : 17, color: light ? 'rgba(255,255,255,.8)' : 'var(--ink-2)' }}>{sub}</p>}
+    </div>
+  );
+}
+
+/* ---- Header ---- */
+function Header({ onLogin, onSignup }) {
+  const { isMobile } = useBreakpoint();
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  useLucide();
+
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 12);
+    window.addEventListener('scroll', fn);
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+
+  // Close menu on resize to desktop
+  useEffect(() => { if (!isMobile) setMenuOpen(false); }, [isMobile]);
+
+  const links = ['Como funciona', 'Grade de coleta', 'Acompanhamento', 'Educação'];
+  const navHref = l => l === 'Acompanhamento' ? '../acompanhamento/index.html' : '#';
+  const headerBg = scrolled || menuOpen ? 'rgba(255,255,255,.95)' : 'rgba(255,255,255,0)';
+
+  return (
+    <header style={{
+      position: 'sticky', top: 0, zIndex: 50,
+      background: headerBg,
+      backdropFilter: scrolled || menuOpen ? 'saturate(180%) blur(12px)' : 'none',
+      borderBottom: scrolled || menuOpen ? '1px solid var(--border)' : '1px solid transparent',
+      transition: 'all var(--dur) var(--ease-out)'
+    }}>
+      <div style={{ maxWidth: 1180, margin: '0 auto', padding: '0 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 60 }}>
+        {/* Logo */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+          <img src="../../assets/logo-capao.png" width="34" height="34" alt="Logo" style={{ borderRadius: 8 }} />
+          <div style={{ lineHeight: 1.2 }}>
+            <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 14, color: 'var(--ink)' }}>Jogue Limpo</div>
+            {!isMobile && <div style={{ fontSize: 11, color: 'var(--ink-3)', fontFamily: 'var(--font-body)' }}>com Capão</div>}
+          </div>
+        </div>
+
+        {/* Desktop nav */}
+        {!isMobile && (
+          <nav style={{ display: 'flex', gap: 2 }}>
+            {links.map(l => (
+              <a key={l} href={navHref(l)} onClick={l === 'Acompanhamento' ? undefined : e => e.preventDefault()}
+                style={{ fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: 13.5, color: 'var(--ink-2)', padding: '7px 11px', borderRadius: 'var(--radius-md)', textDecoration: 'none', transition: 'all var(--dur) var(--ease-out)' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'var(--primary-50)'; e.currentTarget.style.color = 'var(--primary-700)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'var(--ink-2)'; }}
+              >{l}</a>
+            ))}
+          </nav>
+        )}
+
+        {/* Right side */}
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          {!isMobile && (
+            <>
+              <Button variant="ghost" size="sm" onClick={onLogin}>Entrar</Button>
+              <Button variant="primary" size="sm" icon="user-plus" onClick={onSignup}>Criar conta</Button>
+            </>
+          )}
+          {isMobile && (
+            <button className="hamburger-btn" onClick={() => setMenuOpen(o => !o)}>
+              <Icon name={menuOpen ? 'x' : 'menu'} size={20} />
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Mobile dropdown */}
+      {isMobile && menuOpen && (
+        <div className="mobile-menu">
+          {links.map(l => (
+            <a key={l} href={navHref(l)} className="mobile-menu-link" onClick={l === 'Acompanhamento' ? undefined : e => { e.preventDefault(); setMenuOpen(false); }}>{l}</a>
+          ))}
+          <div style={{ height: 1, background: 'var(--border)', margin: '8px 0' }} />
+          <Button variant="outline" style={{ justifyContent: 'center', width: '100%' }} onClick={() => { setMenuOpen(false); onLogin(); }}>Entrar</Button>
+          <Button variant="primary" icon="user-plus" style={{ justifyContent: 'center', width: '100%', marginTop: 8 }} onClick={() => { setMenuOpen(false); onSignup(); }}>Criar conta grátis</Button>
+        </div>
+      )}
+    </header>
+  );
+}
+
+/* ---- Hero mockup (desktop only) ---- */
+function HeroMockup() {
+  return (
+    <div style={{ width: '100%', maxWidth: 440, position: 'relative', paddingBottom: 44 }}>
+      <div className="card" style={{ padding: 0, overflow: 'hidden', boxShadow: 'var(--shadow-xl)' }}>
+        <div style={{ height: 220, background: 'linear-gradient(145deg, #ddf0f5 0%, #c8e8f1 50%, #b8e0ea 100%)', position: 'relative', overflow: 'hidden' }}>
+          <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0, opacity: .22 }}>
+            {[70, 140, 210, 280, 350].map(x => <line key={x} x1={x} y1="0" x2={x} y2="220" stroke="#0a7e9b" strokeWidth="1"/>)}
+            {[44, 88, 132, 176].map(y => <line key={y} x1="0" y1={y} x2="440" y2={y} stroke="#0a7e9b" strokeWidth="1"/>)}
+          </svg>
+          <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
+            <path d="M 55 190 Q 120 150 185 110 Q 255 68 320 78 Q 375 86 400 100" stroke="var(--primary-300)" strokeWidth="3" strokeDasharray="8 4" fill="none" strokeLinecap="round"/>
+            <path d="M 55 190 Q 75 170 100 150" stroke="var(--primary-600)" strokeWidth="4" fill="none" strokeLinecap="round"/>
+          </svg>
+          <div style={{ position: 'absolute', top: 94, left: 280, transform: 'translate(-50%,-50%)' }}>
+            <div style={{ width: 46, height: 46, borderRadius: '50%', background: 'var(--primary-500)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 0 8px rgba(10,126,155,.18)' }}>
+              <Icon name="truck" size={21} color="#fff" />
+            </div>
+          </div>
+          <div style={{ position: 'absolute', bottom: 28, left: 44 }}>
+            <Icon name="map-pin" size={28} color="var(--error)" />
+          </div>
+          <div style={{ position: 'absolute', top: 12, right: 12, background: '#fff', borderRadius: 'var(--radius-pill)', padding: '6px 12px', boxShadow: 'var(--shadow-md)', display: 'flex', alignItems: 'center', gap: 7 }}>
+            <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--success)', flexShrink: 0 }} />
+            <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 12.5, color: 'var(--ink)' }}>Chegando em 18 min</span>
+          </div>
+        </div>
+        <div style={{ padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div>
+            <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 14, color: 'var(--ink)' }}>Caminhão · Rota Centro-Norte</div>
+            <div style={{ fontSize: 12.5, color: 'var(--ink-3)', marginTop: 2, fontFamily: 'var(--font-body)' }}>Recicláveis · Atualizado agora</div>
+          </div>
+          <span className="badge badge-reciclavel"><Icon name="recycle" size={13} />Recicláveis</span>
+        </div>
+      </div>
+      <div className="card" style={{ position: 'absolute', bottom: 0, left: -18, width: 230, padding: '12px 14px', boxShadow: 'var(--shadow-lg)', display: 'flex', gap: 11, alignItems: 'flex-start' }}>
+        <div style={{ width: 34, height: 34, borderRadius: 9, background: '#25D366', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <Icon name="message-circle" size={17} color="#fff" />
+        </div>
+        <div>
+          <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 12.5, color: 'var(--ink)' }}>Alerta WhatsApp</div>
+          <div style={{ fontSize: 12, color: 'var(--ink-2)', marginTop: 3, fontFamily: 'var(--font-body)', lineHeight: 1.4 }}>O caminhão chega em 15 min. Coloque o lixo na calçada!</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---- Hero ---- */
+function Hero({ onSignup, onLogin }) {
+  const { isMobile, isTablet } = useBreakpoint();
+  const isNarrow = isMobile || isTablet;
+  const pad = isMobile ? '56px 16px 48px' : '80px 32px 64px';
+  return (
+    <section style={{ background: 'var(--gray-50)', borderBottom: '1px solid var(--border)', overflow: 'hidden' }}>
+      <div style={{ maxWidth: 1180, margin: '0 auto', padding: pad, display: 'grid', gridTemplateColumns: isNarrow ? '1fr' : '1fr 1fr', gap: isNarrow ? 40 : 72, alignItems: 'center' }}>
+        <div>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'var(--secondary-50)', border: '1px solid var(--secondary-200)', borderRadius: 'var(--radius-pill)', padding: '5px 13px', marginBottom: 20 }}>
+            <Icon name="leaf" size={12} color="var(--secondary-700)" />
+            <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 11, color: 'var(--secondary-700)', letterSpacing: '.07em', textTransform: 'uppercase' }}>Gestão de coleta de resíduos</span>
+          </div>
+          <h1 className="h1" style={{ margin: 0, fontSize: isMobile ? 36 : isTablet ? 44 : 50, lineHeight: 1.06, letterSpacing: '-.02em', color: 'var(--navy)' }}>
+            Acompanhe a coleta no seu bairro em tempo real
+          </h1>
+          <p className="body-lg" style={{ marginTop: 18, color: 'var(--ink-2)', fontSize: isMobile ? 16 : 17, lineHeight: 1.65 }}>
+            Consulte a grade de coletas, rastreie o caminhão no mapa e receba alertas pelo WhatsApp — tudo em um só lugar, gratuito para o morador.
+          </p>
+          <div style={{ display: 'flex', gap: 10, marginTop: 28, flexWrap: 'wrap' }}>
+            <Button variant="primary" size={isMobile ? undefined : 'lg'} icon="user-plus" onClick={onSignup} style={isMobile ? { flex: 1, justifyContent: 'center' } : {}}>Criar conta grátis</Button>
+            <Button variant="outline" size={isMobile ? undefined : 'lg'} onClick={onLogin} style={isMobile ? { flex: 1, justifyContent: 'center' } : {}}>Entrar na conta</Button>
+          </div>
+          <div style={{ display: 'flex', gap: isMobile ? 12 : 22, marginTop: 24, paddingTop: 20, borderTop: '1px solid var(--border)', flexWrap: 'wrap' }}>
+            {[['check-circle-2', 'Gratuito'], ['shield-check', 'LGPD'], ['message-circle', 'WhatsApp']].map(([ic, t]) => (
+              <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <Icon name={ic} size={14} color="var(--primary-500)" />
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--ink-3)', fontWeight: 500 }}>{t}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        {!isNarrow && (
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <HeroMockup />
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* ---- Features ---- */
+function Features() {
+  const { isMobile, isTablet } = useBreakpoint();
+  const cols = isMobile || isTablet ? 'repeat(2,1fr)' : 'repeat(4,1fr)';
+  const items = [
+    ['calendar-days', 'Grade de coleta', 'Consulte dias e horários por bairro. Calendário sempre atualizado.', 'var(--primary-500)', 'var(--primary-50)'],
+    ['map', 'Rastreamento em tempo real', 'Veja a localização do caminhão e o tempo estimado de chegada.', 'var(--secondary-600)', 'var(--secondary-50)'],
+    ['graduation-cap', 'Educação ambiental', 'Dicas de separação, guias de descarte e materiais educativos.', 'var(--info)', 'var(--info-bg)'],
+    ['message-circle', 'WhatsApp Bot', 'Alertas automáticos 15, 30 e 45 min antes da coleta.', '#128C7E', '#e6f5ee'],
+  ];
+  const pad = isMobile ? '56px 16px' : '72px 32px';
+  return (
+    <section style={{ maxWidth: 1180, margin: '0 auto', padding: pad }}>
+      <SectionHead eyebrow="Funcionalidades" title="Tudo que o morador precisa" sub="Do calendário de coleta ao rastreamento do caminhão — uma plataforma para Capão." align="center" isMobile={isMobile} />
+      <div style={{ display: 'grid', gridTemplateColumns: cols, gap: isMobile ? 14 : 20, marginTop: 40 }}>
+        {items.map(([ic, t, d, c, bg]) => (
+          <div key={t} className="card is-hoverable" style={{ padding: isMobile ? 20 : 28 }}>
+            <div style={{ width: 48, height: 48, borderRadius: 14, background: bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Icon name={ic} size={24} color={c} />
+            </div>
+            <h4 className="h5" style={{ marginTop: 16, marginBottom: 0, fontSize: isMobile ? 15 : 17 }}>{t}</h4>
+            <p className="body-sm" style={{ marginTop: 7 }}>{d}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ---- Como funciona ---- */
+function HowItWorks() {
+  const { isMobile, isTablet } = useBreakpoint();
+  const cols = isMobile || isTablet ? 'repeat(2,1fr)' : 'repeat(4,1fr)';
+  const showConnectors = !isMobile && !isTablet;
+  const pad = isMobile ? '56px 16px' : '72px 32px';
+  const steps = [
+    ['user-plus', 'Crie sua conta', 'Cadastre-se com e-mail e senha. Aceite os termos de privacidade (LGPD).'],
+    ['map-pin', 'Informe seu endereço', 'O sistema identifica seu bairro e a rota de coleta.'],
+    ['calendar-check', 'Consulte a grade', 'Veja os dias e horários de coleta para a sua região.'],
+    ['message-circle', 'Ative os alertas', 'Receba alertas pelo WhatsApp 15, 30 ou 45 min antes.'],
+  ];
+  return (
+    <section style={{ background: 'var(--gray-50)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
+      <div style={{ maxWidth: 1180, margin: '0 auto', padding: pad }}>
+        <SectionHead eyebrow="Como funciona" title="Do cadastro ao primeiro alerta em 4 passos" align="center" sub="Simples e gratuito. Sem aplicativo para instalar." isMobile={isMobile} />
+        <div style={{ display: 'grid', gridTemplateColumns: cols, gap: isMobile ? 24 : 24, marginTop: 44 }}>
+          {steps.map(([ic, t, d], i) => (
+            <div key={t} style={{ position: 'relative' }}>
+              {showConnectors && i < steps.length - 1 && (
+                <div style={{ position: 'absolute', top: 23, left: 'calc(50% + 24px)', right: '-24px', height: 1, background: 'var(--border)' }} />
+              )}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div style={{ width: 46, height: 46, borderRadius: '50%', background: 'var(--primary-500)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1, flexShrink: 0 }}>
+                  <Icon name={ic} size={20} color="#fff" />
+                </div>
+                <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, fontSize: 24, color: 'var(--gray-200)', lineHeight: 1 }}>0{i + 1}</span>
+              </div>
+              <h4 className="h5" style={{ marginTop: 14, fontSize: isMobile ? 15 : 17, marginBottom: 0 }}>{t}</h4>
+              <p className="body-sm" style={{ marginTop: 7 }}>{d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---- Rastreamento ---- */
+function TruckTracking() {
+  const { isMobile, isTablet } = useBreakpoint();
+  const isNarrow = isMobile || isTablet;
+  const pad = isMobile ? '56px 16px' : '72px 32px';
+  const features = [
+    ['map', 'Última localização no mapa', 'Posição atualizada via integração com a STC Soluções Tecnológicas.'],
+    ['clock', 'Tempo estimado de chegada', 'Cálculo baseado na rota e na posição atual do caminhão.'],
+    ['route', 'Visualização das rotas', 'Acompanhe o percurso completo no mapa interativo.'],
+    ['bell-ring', 'Status em tempo real', 'Saiba se o caminhão está em pausa ou com algum problema.'],
+  ];
+  return (
+    <section style={{ maxWidth: 1180, margin: '0 auto', padding: pad, display: 'grid', gridTemplateColumns: isNarrow ? '1fr' : '1fr 1fr', gap: isNarrow ? 40 : 64, alignItems: 'center' }}>
+      <div>
+        <SectionHead eyebrow="Acompanhamento do caminhão" title="Saiba exatamente onde está o caminhão" sub="Chega de esperar na calçada sem saber quando vai passar. Rastreamento em tempo real." isMobile={isMobile} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 26 }}>
+          {features.map(([ic, t, d]) => (
+            <div key={t} style={{ display: 'flex', gap: 13, alignItems: 'flex-start' }}>
+              <div style={{ width: 38, height: 38, borderRadius: 11, background: 'var(--primary-50)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
+                <Icon name={ic} size={18} color="var(--primary-600)" />
+              </div>
+              <div>
+                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 14.5, color: 'var(--ink)' }}>{t}</div>
+                <div className="body-sm" style={{ marginTop: 3 }}>{d}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: 22, padding: '12px 14px', background: 'var(--info-bg)', border: '1px solid #bcdcf2', borderRadius: 'var(--radius-md)', display: 'flex', gap: 9, alignItems: 'center' }}>
+          <Icon name="info" size={16} color="var(--info)" style={{ flexShrink: 0 }} />
+          <span style={{ fontSize: 13, color: 'var(--info-fg)', fontFamily: 'var(--font-body)', lineHeight: 1.5 }}>Rastreamento via integração com a <strong>STC Soluções Tecnológicas</strong>.</span>
+        </div>
+      </div>
+      {/* Map mockup */}
+      <div className="card" style={{ padding: 0, overflow: 'hidden', boxShadow: 'var(--shadow-lg)' }}>
+        <div style={{ background: 'linear-gradient(145deg, #ddf0f5 0%, #c8e8f1 50%, #b8e0ea 100%)', height: isNarrow ? 220 : 290, position: 'relative', overflow: 'hidden' }}>
+          <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0, opacity: .2 }}>
+            {[80, 160, 240, 320, 400].map(x => <line key={x} x1={x} y1="0" x2={x} y2="290" stroke="#0a7e9b" strokeWidth="1"/>)}
+            {[58, 116, 174, 232].map(y => <line key={y} x1="0" y1={y} x2="500" y2={y} stroke="#0a7e9b" strokeWidth="1"/>)}
+          </svg>
+          <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
+            <path d="M 60 250 Q 110 200 170 165 Q 240 120 300 105 Q 360 90 400 75" stroke="var(--primary-300)" strokeWidth="3" strokeDasharray="9 5" fill="none" strokeLinecap="round"/>
+            <path d="M 60 250 Q 90 225 115 200" stroke="var(--primary-600)" strokeWidth="4" fill="none" strokeLinecap="round"/>
+          </svg>
+          <div style={{ position: 'absolute', top: 155, left: 252, transform: 'translate(-50%,-50%)' }}>
+            <div style={{ width: 46, height: 46, borderRadius: '50%', background: 'var(--primary-500)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 0 8px rgba(10,126,155,.15)' }}>
+              <Icon name="truck" size={21} color="#fff" />
+            </div>
+          </div>
+          <div style={{ position: 'absolute', bottom: 32, left: 52 }}>
+            <Icon name="map-pin" size={28} color="var(--error)" />
+          </div>
+          <div style={{ position: 'absolute', top: 12, left: 12, background: '#fff', borderRadius: 'var(--radius-pill)', padding: '6px 13px', boxShadow: 'var(--shadow-md)', display: 'flex', gap: 7, alignItems: 'center' }}>
+            <div style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--success)', flexShrink: 0 }} />
+            <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 12.5, color: 'var(--ink)' }}>Em rota</span>
+          </div>
+        </div>
+        <div style={{ padding: '14px 18px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+          {[['clock', 'Chegada', '23 min'], ['map-pin', 'Bairro', 'Vila Nova'], ['route', 'Distância', '3,4 km']].map(([ic, label, val]) => (
+            <div key={label}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 3 }}>
+                <Icon name={ic} size={11} color="var(--ink-3)" />
+                <span style={{ fontSize: 10, color: 'var(--ink-3)', fontFamily: 'var(--font-body)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em' }}>{label}</span>
+              </div>
+              <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 15, color: 'var(--ink)' }}>{val}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---- WhatsApp Bot ---- */
+function WhatsAppBot({ onActivate }) {
+  const { isMobile, isTablet } = useBreakpoint();
+  const isNarrow = isMobile || isTablet;
+  const pad = isMobile ? '56px 16px' : '72px 32px';
+  const alerts = [
+    { time: '45 min', msg: 'O caminhão está a 45 minutos do seu endereço. Prepare o lixo.', dot: '#d98a04', label: '#7a4d02' },
+    { time: '30 min', msg: 'O caminhão chegará em 30 minutos. Coloque os resíduos na calçada.', dot: '#2480c4', label: '#144f7d' },
+    { time: '15 min', msg: 'Urgente! O caminhão está a 15 minutos. Coloque o lixo agora!', dot: '#15924f', label: '#0a5a30' },
+  ];
+  const actions = ['Enviar dúvida', 'Fazer sugestão', 'Registrar reclamação', 'Solicitar coleta de grande volume'];
+  return (
+    <section style={{ background: 'var(--navy)', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(600px 400px at 90% 50%, rgba(10,126,155,.3), transparent 60%)' }} />
+      <div style={{ maxWidth: 1180, margin: '0 auto', position: 'relative', padding: pad, display: 'grid', gridTemplateColumns: isNarrow ? '1fr' : '1fr 1fr', gap: isNarrow ? 40 : 64, alignItems: 'center' }}>
+        <div>
+          <div className="overline" style={{ color: 'var(--primary-300)', marginBottom: 10 }}>WhatsApp Bot</div>
+          <h2 className="h2" style={{ margin: '0 0 14px', fontSize: isMobile ? 28 : 34, color: '#fff' }}>Alertas de coleta direto no seu WhatsApp</h2>
+          <p className="body-lg" style={{ margin: 0, color: 'rgba(255,255,255,.75)', fontSize: isMobile ? 15 : 17 }}>
+            Cadastre seu número uma única vez. O bot avisa automaticamente antes do caminhão passar.
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 13, marginTop: 24 }}>
+            {[
+              ['bell', 'Alertas com 15, 30 ou 45 minutos de antecedência'],
+              ['alert-triangle', 'Aviso quando o caminhão está parado ou em manutenção'],
+              ['message-square', 'Envie dúvidas, sugestões e pedidos de coleta especial'],
+            ].map(([ic, t]) => (
+              <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(255,255,255,.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Icon name={ic} size={16} color="rgba(255,255,255,.88)" />
+                </div>
+                <span style={{ color: 'rgba(255,255,255,.8)', fontFamily: 'var(--font-body)', fontSize: isMobile ? 14 : 15 }}>{t}</span>
+              </div>
+            ))}
+          </div>
+          <Button variant="primary" style={{ marginTop: 28 }} icon="message-circle" iconRight="arrow-right" onClick={onActivate}>Ativar WhatsApp Bot</Button>
+        </div>
+        {!isMobile && (
+          <div style={{ display: 'flex', justifyContent: isTablet ? 'flex-start' : 'flex-end' }}>
+            <div style={{ width: 300, background: '#e5ddd5', borderRadius: 18, overflow: 'hidden', boxShadow: 'var(--shadow-xl)' }}>
+              <div style={{ background: '#075E54', padding: '10px 15px', display: 'flex', alignItems: 'center', gap: 9 }}>
+                <div style={{ width: 34, height: 34, borderRadius: '50%', background: '#25D366', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Icon name="recycle" size={17} color="#fff" />
+                </div>
+                <div>
+                  <div style={{ color: '#fff', fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 13.5 }}>Jogue Limpo Capão</div>
+                  <div style={{ color: 'rgba(255,255,255,.65)', fontSize: 11, fontFamily: 'var(--font-body)' }}>Bot de coleta</div>
+                </div>
+              </div>
+              <div style={{ padding: '10px 9px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {alerts.map(({ time, msg, dot, label }) => (
+                  <div key={time} style={{ alignSelf: 'flex-start', maxWidth: '92%' }}>
+                    <div style={{ background: '#fff', borderRadius: '0 9px 9px 9px', padding: '7px 11px', boxShadow: '0 1px 2px rgba(0,0,0,.09)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 3 }}>
+                        <div style={{ width: 6, height: 6, borderRadius: '50%', background: dot, flexShrink: 0 }} />
+                        <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 10.5, color: label }}>Alerta · {time} antes</span>
+                      </div>
+                      <p style={{ margin: 0, fontSize: 12, fontFamily: 'var(--font-body)', color: '#1a1a1a', lineHeight: 1.4 }}>{msg}</p>
+                    </div>
+                  </div>
+                ))}
+                <div style={{ alignSelf: 'flex-start', maxWidth: '92%' }}>
+                  <div style={{ background: '#fff', borderRadius: '0 9px 9px 9px', padding: '9px 11px', boxShadow: '0 1px 2px rgba(0,0,0,.09)' }}>
+                    <p style={{ margin: '0 0 7px', fontSize: 12, fontFamily: 'var(--font-heading)', fontWeight: 700, color: '#1a1a1a' }}>Como posso ajudar?</p>
+                    {actions.map((a, i) => (
+                      <div key={a} style={{ fontSize: 11.5, color: '#075E54', fontFamily: 'var(--font-body)', padding: '3px 0', borderTop: i ? '1px solid #f0f0f0' : 'none' }}>
+                        {i + 1}. {a}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* ---- Grade de Coleta ---- */
+function CollectionSchedule() {
+  const { isMobile, isTablet } = useBreakpoint();
+  const isNarrow = isMobile || isTablet;
+  const [search, setSearch] = useState('');
+  const pad = isMobile ? '56px 16px' : '72px 32px';
+  const rows = [
+    ['Centro · Vila Nova', 'Seg / Qua / Sex', 'Recicláveis', 'badge-reciclavel', 'recycle'],
+    ['Jardim das Águas', 'Ter / Qui', 'Orgânicos', 'badge-organico', 'leaf'],
+    ['Ribeirinho · Porto', 'Quarta-feira', 'Coleta agendada', 'badge-coleta', 'calendar-check'],
+    ['Industrial', 'Sexta-feira', 'Recicláveis', 'badge-reciclavel', 'recycle'],
+    ['São João · Três Rios', 'Seg / Qui', 'Orgânicos', 'badge-organico', 'leaf'],
+    ['Parque Verde', 'Ter / Sex', 'Recicláveis', 'badge-reciclavel', 'recycle'],
+  ];
+  const filtered = search ? rows.filter(r => r[0].toLowerCase().includes(search.toLowerCase())) : rows;
+  return (
+    <section style={{ background: 'var(--gray-50)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
+      <div style={{ maxWidth: 1180, margin: '0 auto', padding: pad, display: 'grid', gridTemplateColumns: isNarrow ? '1fr' : '.9fr 1.1fr', gap: isNarrow ? 32 : 56, alignItems: 'flex-start' }}>
+        <div>
+          <SectionHead eyebrow="Grade de coleta" title="Saiba quando é a coleta no seu bairro" sub="Consulte o calendário por bairro. Os dias seguem as rotas das cooperativas parceiras." isMobile={isMobile} />
+          <div style={{ marginTop: 22 }}>
+            <div className="field">
+              <label className="field-label">Buscar por bairro ou região</label>
+              <div className="input-icon">
+                <Icon name="search" />
+                <input className="input" placeholder="Ex: Centro, Jardim..." value={search} onChange={e => setSearch(e.target.value)} />
+              </div>
+            </div>
+          </div>
+          <div style={{ marginTop: 12, display: 'flex', gap: 7, flexWrap: 'wrap' }}>
+            {['Todos', 'Centro', 'Jardim', 'Industrial'].map(tag => (
+              <button key={tag} onClick={() => setSearch(tag === 'Todos' ? '' : tag)} style={{
+                fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: 12.5, padding: '6px 13px',
+                borderRadius: 'var(--radius-pill)', border: '1.5px solid',
+                background: (search === tag || (tag === 'Todos' && !search)) ? 'var(--primary-50)' : 'transparent',
+                color: (search === tag || (tag === 'Todos' && !search)) ? 'var(--primary-700)' : 'var(--ink-2)',
+                borderColor: (search === tag || (tag === 'Todos' && !search)) ? 'var(--primary-300)' : 'var(--border-strong)',
+                cursor: 'pointer', transition: 'all var(--dur) var(--ease-out)'
+              }}>{tag}</button>
+            ))}
+          </div>
+        </div>
+        <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+          <div style={{ padding: '12px 18px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 14, color: 'var(--ink)' }}>Dias de coleta</span>
+            <span className="badge badge-reciclavel">{filtered.length} regiões</span>
+          </div>
+          {filtered.length === 0 ? (
+            <div style={{ padding: '32px 18px', textAlign: 'center' }}>
+              <Icon name="search-x" size={26} color="var(--gray-300)" style={{ marginBottom: 9 }} />
+              <div style={{ fontSize: 14, color: 'var(--ink-3)', fontFamily: 'var(--font-body)' }}>Nenhum bairro encontrado para "{search}"</div>
+            </div>
+          ) : filtered.map((r, i) => (
+            <div key={r[0]} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '15px 18px', borderTop: i ? '1px solid var(--border)' : 'none' }}>
+              <div>
+                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 14.5, color: 'var(--ink)' }}>{r[0]}</div>
+                <div className="body-sm" style={{ color: 'var(--ink-3)', marginTop: 2 }}>{r[1]}</div>
+              </div>
+              <span className={'badge ' + r[3]}><Icon name={r[4]} size={13} />{r[2]}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---- Educação ---- */
+function Education() {
+  const { isMobile, isTablet } = useBreakpoint();
+  const isNarrow = isMobile || isTablet;
+  const pad = isMobile ? '56px 16px' : '72px 32px';
+  const tips = [
+    ['recycle', 'var(--primary-500)', 'var(--primary-50)', 'Recicláveis', 'Papel, plástico, metal e vidro limpos e secos.'],
+    ['leaf', 'var(--secondary-600)', 'var(--secondary-50)', 'Orgânicos', 'Restos de alimentos. Ideal para compostagem.'],
+    ['trash-2', 'var(--olive-600)', 'var(--olive-50)', 'Rejeitos', 'Fraldas, papel higiênico, cerâmica — vão para o aterro.'],
+    ['battery-charging', 'var(--navy)', 'var(--primary-50)', 'Especiais', 'Pilhas e eletrônicos em pontos de coleta específicos.'],
+  ];
+  return (
+    <section style={{ maxWidth: 1180, margin: '0 auto', padding: pad, display: 'grid', gridTemplateColumns: isNarrow ? '1fr' : '1fr 1fr', gap: isNarrow ? 36 : 64, alignItems: 'center' }}>
+      <div>
+        <SectionHead eyebrow="Educação ambiental" title="Separe certo, recicle mais" sub="Cada tipo de resíduo tem um destino. Veja como separar corretamente." isMobile={isMobile} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 24 }}>
+          {tips.map(([ic, c, bg, t, d]) => (
+            <div key={t} className="card" style={{ padding: '14px 16px', display: 'flex', gap: 13, alignItems: 'flex-start' }}>
+              <div style={{ width: 40, height: 40, borderRadius: 11, background: bg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <Icon name={ic} size={20} color={c} />
+              </div>
+              <div>
+                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 14.5, color: 'var(--ink)' }}>{t}</div>
+                <div className="body-sm" style={{ marginTop: 3 }}>{d}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <Button variant="secondary" style={{ marginTop: 20 }} iconRight="arrow-right">Ver guia completo</Button>
+      </div>
+      {!isMobile && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div style={{ borderRadius: 'var(--radius-xl)', overflow: 'hidden', height: 240, background: 'linear-gradient(135deg, var(--secondary-400), var(--secondary-700))', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 10, boxShadow: 'var(--shadow-lg)' }}>
+            <Icon name="graduation-cap" size={48} color="rgba(255,255,255,.45)" />
+            <span style={{ color: 'rgba(255,255,255,.9)', fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 16, textAlign: 'center', padding: '0 24px' }}>Oficinas e materiais educativos</span>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            {[['book-open', 'Cartilhas para download'], ['users', 'Oficinas comunitárias']].map(([ic, t]) => (
+              <div key={t} className="card is-hoverable" style={{ padding: '15px 14px', display: 'flex', gap: 10, alignItems: 'center', cursor: 'pointer' }}>
+                <div style={{ width: 32, height: 32, borderRadius: 9, background: 'var(--info-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Icon name={ic} size={16} color="var(--info)" />
+                </div>
+                <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 13, color: 'var(--ink)' }}>{t}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+/* ---- CTA Banner ---- */
+function CTABanner({ onSignup, onLogin }) {
+  const { isMobile } = useBreakpoint();
+  const pad = isMobile ? '48px 16px' : '60px 32px';
+  return (
+    <section style={{ background: 'linear-gradient(135deg, var(--primary-600), var(--secondary-700))', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(500px 200px at 80% 50%, rgba(255,255,255,.05), transparent)' }} />
+      <div style={{ maxWidth: 1180, margin: '0 auto', position: 'relative', padding: pad, display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'center', justifyContent: 'space-between', gap: isMobile ? 24 : 32 }}>
+        <div>
+          <h2 className="h2" style={{ margin: 0, fontSize: isMobile ? 26 : 34, color: '#fff' }}>Pronto para começar?</h2>
+          <p className="body-lg" style={{ margin: '10px 0 0', color: 'rgba(255,255,255,.8)', fontSize: isMobile ? 15 : 17 }}>
+            Crie sua conta gratuita e nunca mais perca a coleta do seu bairro.
+          </p>
+        </div>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', width: isMobile ? '100%' : 'auto' }}>
+          <button className="btn btn-lg" style={{ background: '#fff', color: 'var(--primary-700)', border: 'none', flex: isMobile ? 1 : 'none', justifyContent: 'center' }} onClick={onSignup}>
+            <Icon name="user-plus" size={19} />
+            Criar conta grátis
+          </button>
+          <button className="btn btn-lg" style={{ background: 'transparent', color: 'rgba(255,255,255,.9)', border: '1.5px solid rgba(255,255,255,.35)', flex: isMobile ? 1 : 'none', justifyContent: 'center' }} onClick={onLogin}>
+            <Icon name="log-in" size={19} />
+            Entrar
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---- Footer ---- */
+function Footer() {
+  const { isMobile, isTablet } = useBreakpoint();
+  const cols = isMobile ? '1fr 1fr' : isTablet ? '1.2fr 1fr 1fr' : '1.4fr 1fr 1fr 1fr';
+  const footerCols = [
+    ['Para o morador', ['Criar conta', 'Entrar', 'Grade de coleta', 'Acompanhar caminhão', 'Alertas WhatsApp']],
+    ['Educação', ['Guia de separação', 'Pontos de entrega', 'Oficinas', 'Cartilhas']],
+    ['Cidade', ['Sobre a iniciativa', 'Painel administrativo', 'Transparência', 'Contato']],
+  ];
+  return (
+    <footer style={{ background: 'var(--gray-950)', color: 'rgba(255,255,255,.7)' }}>
+      <div style={{ maxWidth: 1180, margin: '0 auto', padding: isMobile ? '40px 16px 28px' : '52px 32px 36px', display: 'grid', gridTemplateColumns: cols, gap: isMobile ? '28px 20px' : 40 }}>
+        <div style={{ gridColumn: isMobile ? '1 / -1' : 'auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 12 }}>
+            <div style={{ width: 30, height: 30, borderRadius: 8, background: 'var(--primary-600)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Icon name="leaf" size={16} color="#fff" />
+            </div>
+            <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 14.5, color: '#fff' }}>Jogue Limpo com Capão</span>
+          </div>
+          <p style={{ fontSize: 13, lineHeight: 1.6, fontFamily: 'var(--font-body)', margin: '0 0 16px' }}>
+            Plataforma pública de gestão de coleta de resíduos de Capão.
+          </p>
+          <div style={{ display: 'flex', gap: 7 }}>
+            {['globe', 'message-circle', 'share-2'].map(s => (
+              <div key={s} style={{ width: 32, height: 32, borderRadius: 7, background: 'rgba(255,255,255,.07)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+                <Icon name={s} size={14} color="rgba(255,255,255,.5)" />
+              </div>
+            ))}
+          </div>
+        </div>
+        {footerCols.slice(0, isTablet ? 2 : 3).map(([title, links]) => (
+          <div key={title}>
+            <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 11, color: 'rgba(255,255,255,.4)', textTransform: 'uppercase', letterSpacing: '.1em', marginBottom: 12 }}>{title}</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+              {links.map(l => (
+                <a key={l} href="#" onClick={e => e.preventDefault()}
+                  style={{ color: 'rgba(255,255,255,.65)', textDecoration: 'none', fontSize: 13.5, fontFamily: 'var(--font-body)', transition: 'color var(--dur) var(--ease-out)' }}
+                  onMouseEnter={e => e.currentTarget.style.color = '#fff'}
+                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,.65)'}
+                >{l}</a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={{ maxWidth: 1180, margin: '0 auto', padding: isMobile ? '16px 16px' : '16px 32px', borderTop: '1px solid rgba(255,255,255,.07)', display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', gap: 6, alignItems: isMobile ? 'flex-start' : 'center' }}>
+        <span style={{ fontSize: 12.5 }}>© 2025 Jogue Limpo com Capão · Prefeitura de Capão</span>
+        <span style={{ fontSize: 12.5 }}>Política de Privacidade · LGPD</span>
+      </div>
+    </footer>
+  );
+}
+
+/* ---- Auth Modal ---- */
+function AuthModal({ initialTab, onClose }) {
+  const { isMobile } = useBreakpoint();
+  const [tab, setTab] = useState(initialTab || 'login');
+  const [lgpd, setLgpd] = useState(false);
+  useLucide();
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 200, display: 'flex', alignItems: isMobile ? 'flex-end' : 'center', justifyContent: 'center', background: 'rgba(9,54,96,.55)', backdropFilter: 'blur(4px)', padding: isMobile ? 0 : 16 }} onClick={onClose}>
+      <div className="card" style={{ width: '100%', maxWidth: isMobile ? '100%' : 420, padding: isMobile ? '24px 20px 32px' : 32, position: 'relative', borderRadius: isMobile ? '20px 20px 0 0' : 'var(--radius-lg)', maxHeight: isMobile ? '92vh' : 'none', overflowY: 'auto' }} onClick={e => e.stopPropagation()}>
+        {isMobile && <div style={{ width: 36, height: 4, borderRadius: 2, background: 'var(--gray-300)', margin: '0 auto 20px' }} />}
+        {!isMobile && (
+          <button onClick={onClose} style={{ position: 'absolute', top: 14, right: 14, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--ink-3)', padding: 4, borderRadius: 6, display: 'flex' }}>
+            <Icon name="x" size={19} />
+          </button>
+        )}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 20 }}>
+          <div style={{ width: 30, height: 30, borderRadius: 8, background: 'var(--primary-500)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Icon name="leaf" size={15} color="#fff" />
+          </div>
+          <span style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 15.5, color: 'var(--ink)' }}>Jogue Limpo com Capão</span>
+        </div>
+        <div style={{ display: 'flex', gap: 0, marginBottom: 20, background: 'var(--gray-100)', borderRadius: 'var(--radius-md)', padding: 4 }}>
+          {['login', 'signup'].map(t => (
+            <button key={t} onClick={() => setTab(t)} style={{
+              flex: 1, padding: '9px 0', borderRadius: 8, border: 'none', cursor: 'pointer',
+              fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 14,
+              background: tab === t ? '#fff' : 'transparent',
+              color: tab === t ? 'var(--ink)' : 'var(--ink-3)',
+              boxShadow: tab === t ? 'var(--shadow-sm)' : 'none',
+              transition: 'all var(--dur) var(--ease-out)'
+            }}>{t === 'login' ? 'Entrar' : 'Criar conta'}</button>
+          ))}
+        </div>
+        {tab === 'login' ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <div className="field"><label className="field-label">E-mail</label><input className="input" type="email" placeholder="voce@email.com" /></div>
+            <div className="field"><label className="field-label">Senha</label><input className="input" type="password" placeholder="••••••••" /></div>
+            <a href="#" onClick={e => e.preventDefault()} style={{ fontSize: 13, color: 'var(--link)', fontFamily: 'var(--font-heading)', fontWeight: 600, textDecoration: 'none' }}>Esqueci minha senha</a>
+            <Button variant="primary" style={{ width: '100%', justifyContent: 'center' }} iconRight="arrow-right">Entrar na conta</Button>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 13 }}>
+            <div className="field"><label className="field-label">E-mail</label><input className="input" type="email" placeholder="voce@email.com" /></div>
+            <div className="field"><label className="field-label">Confirmar e-mail</label><input className="input" type="email" placeholder="voce@email.com" /></div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div className="field"><label className="field-label">Senha</label><input className="input" type="password" placeholder="Mín. 8 caracteres" /></div>
+              <div className="field"><label className="field-label">Confirmar senha</label><input className="input" type="password" placeholder="••••••••" /></div>
+            </div>
+            <label style={{ display: 'flex', gap: 10, alignItems: 'flex-start', cursor: 'pointer' }}>
+              <input type="checkbox" checked={lgpd} onChange={e => setLgpd(e.target.checked)} style={{ marginTop: 3, flexShrink: 0 }} />
+              <span style={{ fontSize: 13, color: 'var(--ink-2)', fontFamily: 'var(--font-body)', lineHeight: 1.55 }}>
+                Aceito os <a href="#" onClick={e => e.preventDefault()} style={{ color: 'var(--link)', fontWeight: 600 }}>Termos de Uso</a> e autorizo o tratamento dos meus dados conforme a <a href="#" onClick={e => e.preventDefault()} style={{ color: 'var(--link)', fontWeight: 600 }}>LGPD</a>.
+              </span>
+            </label>
+            <Button variant="primary" style={{ width: '100%', justifyContent: 'center' }} icon="user-plus">Criar conta grátis</Button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ---- App ---- */
+function App() {
+  const [modal, setModal] = useState(null);
+  useLucide();
+  useEffect(() => { if (window.lucide) window.lucide.createIcons(); }, [modal]);
+  return (
+    <div style={{ background: '#fff' }}>
+      <Header onLogin={() => setModal('login')} onSignup={() => setModal('signup')} />
+      <Hero onSignup={() => setModal('signup')} onLogin={() => setModal('login')} />
+      <Features />
+      <HowItWorks />
+      <TruckTracking />
+      <WhatsAppBot onActivate={() => setModal('signup')} />
+      <CollectionSchedule />
+      <Education />
+      <CTABanner onSignup={() => setModal('signup')} onLogin={() => setModal('login')} />
+      <Footer />
+      {modal && <AuthModal initialTab={modal} onClose={() => setModal(null)} />}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+/* =====================================================================
+   JOGUE LIMPO — Component styles. Requires colors_and_type.css.
+   ===================================================================== */
+
+/* ---------------- BUTTONS ---------------- */
+.btn{
+  font-family:var(--font-heading);font-weight:600;font-size:15px;line-height:1;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 20px;border-radius:var(--radius-pill);border:1.5px solid transparent;
+  cursor:pointer;transition:background var(--dur) var(--ease-out),color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),transform var(--dur-fast) var(--ease-out),box-shadow var(--dur) var(--ease-out);
+  text-decoration:none;white-space:nowrap;
+}
+.btn:active{transform:scale(.97);}
+.btn .lucide{width:18px;height:18px;}
+.btn-sm{padding:8px 14px;font-size:13px;}
+.btn-lg{padding:15px 26px;font-size:17px;}
+
+.btn-primary{background:var(--primary-500);color:#fff;}
+.btn-primary:hover{background:var(--primary-600);box-shadow:var(--shadow-md);}
+.btn-primary:active{background:var(--primary-700);}
+.btn-primary:disabled{background:var(--gray-200);color:var(--gray-400);cursor:not-allowed;transform:none;box-shadow:none;}
+
+.btn-secondary{background:var(--secondary-600);color:#fff;}
+.btn-secondary:hover{background:var(--secondary-700);box-shadow:var(--shadow-md);}
+.btn-secondary:active{background:var(--secondary-800);}
+.btn-secondary:disabled{background:var(--gray-200);color:var(--gray-400);cursor:not-allowed;}
+
+.btn-outline{background:transparent;color:var(--primary-600);border-color:var(--primary-300);}
+.btn-outline:hover{background:var(--primary-50);border-color:var(--primary-500);}
+.btn-outline:active{background:var(--primary-100);}
+.btn-outline:disabled{color:var(--gray-400);border-color:var(--gray-200);cursor:not-allowed;}
+
+.btn-ghost{background:transparent;color:var(--primary-600);}
+.btn-ghost:hover{background:var(--primary-50);}
+.btn-ghost:active{background:var(--primary-100);}
+.btn-ghost:disabled{color:var(--gray-400);cursor:not-allowed;}
+
+/* ---------------- INPUTS ---------------- */
+.field{display:flex;flex-direction:column;gap:6px;}
+.field-label{font-family:var(--font-heading);font-size:13px;font-weight:600;color:var(--ink-2);}
+.input{
+  font-family:var(--font-body);font-size:15px;color:var(--ink);
+  padding:11px 14px;border-radius:var(--radius-md);border:1.5px solid var(--border-strong);
+  background:#fff;transition:border-color var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out);
+  width:100%;box-sizing:border-box;
+}
+.input::placeholder{color:var(--ink-3);}
+.input:hover{border-color:var(--gray-400);}
+.input:focus{outline:none;border-color:var(--primary-500);box-shadow:0 0 0 3px var(--primary-100);}
+.input:disabled{background:var(--gray-100);color:var(--gray-400);cursor:not-allowed;}
+.input.is-error{border-color:var(--error);}
+.input.is-error:focus{box-shadow:0 0 0 3px var(--error-bg);}
+.input.is-success{border-color:var(--success);}
+.input.is-success:focus{box-shadow:0 0 0 3px var(--success-bg);}
+.field-hint{font-size:12px;color:var(--ink-3);}
+.field-hint.is-error{color:var(--error-fg);}
+.field-hint.is-success{color:var(--success-fg);}
+textarea.input{resize:vertical;min-height:84px;line-height:1.5;}
+
+.input-icon{position:relative;display:flex;align-items:center;}
+.input-icon .lucide{position:absolute;left:13px;width:18px;height:18px;color:var(--ink-3);pointer-events:none;}
+.input-icon .input{padding-left:40px;}
+
+/* ---------------- BADGES ---------------- */
+.badge{
+  font-family:var(--font-heading);font-weight:600;font-size:12.5px;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:var(--radius-pill);border:1px solid transparent;
+}
+.badge .lucide{width:14px;height:14px;}
+.badge-reciclavel{background:var(--primary-50);color:var(--primary-700);border-color:var(--primary-200);}
+.badge-organico{background:var(--secondary-50);color:var(--secondary-800);border-color:var(--secondary-200);}
+.badge-coleta{background:var(--olive-50);color:var(--olive-700);border-color:var(--olive-200);}
+.badge-educacao{background:var(--info-bg);color:var(--info-fg);border-color:#bcdcf2;}
+
+/* ---------------- ALERTS ---------------- */
+.alert{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:14px 16px;border-radius:var(--radius-md);border:1px solid transparent;
+  font-family:var(--font-body);font-size:14px;line-height:1.45;
+}
+.alert .lucide{width:20px;height:20px;flex:0 0 20px;margin-top:1px;}
+.alert strong{font-family:var(--font-heading);font-weight:700;display:block;margin-bottom:2px;}
+.alert-success{background:var(--success-bg);color:var(--success-fg);border-color:#bfe3cd;}
+.alert-warning{background:var(--warning-bg);color:var(--warning-fg);border-color:#f0dcae;}
+.alert-error{background:var(--error-bg);color:var(--error-fg);border-color:#f1c4c4;}
+.alert-info{background:var(--info-bg);color:var(--info-fg);border-color:#bcdcf2;}
+
+/* ---------------- CARDS ---------------- */
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-sm);transition:box-shadow var(--dur) var(--ease-out),transform var(--dur) var(--ease-out);
+}
+.card.is-hoverable:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);}
